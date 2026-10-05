@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nebula Education — Smart School Platform</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============ NEBULA THEME ============ */
+:root{
+  --bg:#f5f4fb; --card:#fff; --ink:#1e1b3a; --muted:#6b7280;
+  --primary:#7c3aed; --primary-2:#6d28d9; --green:#059669; --orange:#d97706; --red:#dc2626;
+  --tab:#7c3aed; --hw:#2563eb; --hood:#059669;
+  --radius:14px; --shadow:0 8px 24px rgba(30,27,58,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+.hidden{display:none!important}
+.muted{color:var(--muted);font-size:.9rem}
+.hint{background:#f3efff;color:#4c1d95;padding:10px 14px;border-radius:10px;margin-bottom:14px;font-size:.92rem;line-height:1.5}
+.loading{padding:30px;text-align:center;color:var(--muted)}
+hr{border:none;border-top:1px solid #eef0f6;margin:14px 0}
+
+/* Buttons & inputs */
+.btn{border:1px solid #d9d6ee;background:#fff;color:var(--ink);padding:9px 16px;border-radius:10px;font-weight:600;cursor:pointer;transition:.15s;font-size:.92rem;font-family:inherit}
+.btn:hover{border-color:var(--primary);color:var(--primary)}
+.btn-primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-2);color:#fff}
+.btn-ghost{background:transparent;color:#cbd5e1;border-color:#4b4680}
+.btn-ghost:hover{color:#fff;border-color:#8b83c9}
+.btn-danger{background:var(--red);border-color:var(--red);color:#fff}
+.btn-danger:hover{background:#b91c1c;color:#fff}
+.btn-block{width:100%}
+.icon-btn{border:none;background:transparent;font-size:1.1rem;cursor:pointer}
+input,select,textarea{padding:10px 12px;border:1px solid #d9d6ee;border-radius:10px;font:inherit;width:100%;background:#fff;margin-bottom:8px}
+textarea{resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid #ddd3fb;border-color:var(--primary)}
+
+/* Auth */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+  background:linear-gradient(135deg,#0f0c29,#302b63 50%,#24243e);position:relative;overflow:hidden}
+.auth-wrap::before{content:"";position:absolute;inset:0;
+  background-image:radial-gradient(2px 2px at 20% 30%,#fff8 50%,transparent 51%),radial-gradient(1.5px 1.5px at 70% 20%,#fff6 50%,transparent 51%),radial-gradient(2px 2px at 85% 65%,#fff5 50%,transparent 51%),radial-gradient(1.5px 1.5px at 35% 80%,#fff7 50%,transparent 51%),radial-gradient(2px 2px at 55% 50%,#fff4 50%,transparent 51%)}
+.auth-card{position:relative;background:#fff;border-radius:20px;padding:34px;width:100%;max-width:450px;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.auth-brand{font-size:1.55rem;font-weight:800;margin-bottom:4px}
+.auth-brand span{background:linear-gradient(90deg,#7c3aed,#2563eb);-webkit-background-clip:text;background-clip:text;color:transparent}
+.auth-card h1{font-size:1.3rem;margin-bottom:4px}
+.auth-sub{color:var(--muted);font-size:.88rem;margin-bottom:18px}
+.auth-tabs{display:flex;gap:8px;margin-bottom:18px}
+.auth-tabs button{flex:1;padding:9px;border-radius:10px;border:1px solid #d9d6ee;background:#f8f7fe;font-weight:600;cursor:pointer;font:inherit}
+.auth-tabs button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.auth-form{display:flex;flex-direction:column}
+.auth-form label{display:flex;flex-direction:column;gap:5px;font-size:.85rem;font-weight:600;margin-bottom:10px}
+.auth-form label input,.auth-form label select{margin-bottom:0}
+.form-error{color:var(--red);font-size:.85rem;min-height:1.2em;margin-top:8px}
+.role-fields{display:flex;gap:10px}
+.role-fields label{flex:1}
+.config-banner{position:fixed;top:0;left:0;right:0;z-index:99;background:#fef3c7;color:#92400e;padding:10px 16px;font-weight:600;text-align:center;font-size:.9rem}
+
+/* App shell */
+.app{display:flex;min-height:100vh}
+.sidebar{width:250px;background:linear-gradient(180deg,#14122b,#251d54);color:#e6e3f7;padding:20px 14px;display:flex;flex-direction:column;gap:16px;position:sticky;top:0;height:100vh}
+.sidebar .brand{font-weight:800;font-size:1.15rem;padding:0 8px}
+.sidebar .brand span{background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent}
+#nav{display:flex;flex-direction:column;gap:4px;flex:1}
+.nav-btn{display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;border:none;border-radius:10px;background:transparent;color:#c3bce6;font:inherit;font-weight:600;cursor:pointer;text-align:left}
+.nav-btn:hover{background:#33296b;color:#fff}
+.nav-btn.active{background:var(--primary);color:#fff}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{background:#fff;border-bottom:1px solid #e8e6f5;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+.topbar h2{font-size:1.12rem}
+.user-chip{display:flex;align-items:center;gap:10px;font-weight:600}
+.views{padding:22px 24px;max-width:1150px;width:100%}
+.view{display:none}
+.view.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Cards */
+.card{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);margin-bottom:16px}
+.card h3{margin-bottom:10px;font-size:1.02rem}
+.card h4{margin:12px 0 8px;font-size:.92rem}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.grid-2>.card,.grid-3>.card{margin-bottom:0}
+.profile-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #eef0f6;font-size:.93rem;gap:10px}
+.air{color:var(--primary)}
+
+/* Badges */
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:700;background:#f0ebff;color:#6d28d9}
+.badge.green{background:#d1fae5;color:#065f46}
+.badge.orange{background:#fef3c7;color:#92400e}
+.badge.muted{background:#f3f4f6;color:#6b7280}
+.badge.role-teacher{background:#dcfce7;color:#166534}
+.badge.role-student{background:#ede9fe;color:#5b21b6}
+.badge.role-hm,.badge.role-meo,.badge.role-deo{background:#fde68a;color:#78350f}
+
+/* Leaderboard */
+.leaderboard{list-style:none}
+.leaderboard li{display:flex;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px dashed #eef0f6;font-size:.93rem}
+.leaderboard li.me{background:#f0ebff;border-radius:8px;font-weight:700}
+.leaderboard .rank{width:36px}
+.leaderboard .name{flex:1}
+.leaderboard .score{font-weight:800;color:var(--primary)}
+
+/* Teacher performance */
+.rating-summary{display:flex;align-items:center;gap:16px;margin-bottom:10px}
+.big-rating{font-size:2.2rem;font-weight:800;color:var(--primary)}
+.big-rating small{font-size:1rem;color:var(--muted)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.comment-list{list-style:none}
+.comment-list li{padding:8px 0;border-bottom:1px dashed #eef0f6;font-size:.92rem}
+.comment-list p{color:var(--muted);margin-top:2px}
+
+/* 3-Device system */
+.device{border-top:4px solid}
+.dev-tab{border-color:var(--tab)}
+.dev-hw{border-color:var(--hw)}
+.dev-hood{border-color:var(--hood)}
+.t-tab{color:var(--tab)}.t-hw{color:var(--hw)}.t-hood{color:var(--hood)}
+.conn{font-weight:700;margin-bottom:8px;font-size:.92rem}
+.conn.on{color:var(--green)}
+.conn.off{color:var(--red)}
+.content-stream{margin-top:12px;display:flex;flex-direction:column;gap:10px}
+.content-item{background:#f8f7fe;border:1px solid #eef0f6;border-radius:10px;padding:10px 12px;font-size:.9rem}
+.content-item.test{background:#fef2f2;border-color:#fecaca}
+.content-item a{word-break:break-all;color:var(--hw)}
+.hw-log{list-style:none;font-size:.85rem;color:#374151}
+.hw-log li{padding:4px 0;border-bottom:1px dashed #eef0f6}
+.star-row{display:flex;gap:6px;margin-bottom:10px}
+.star{font-size:1.6rem;background:none;border:none;cursor:pointer;color:#d1d5db}
+.star.on{color:#f59e0b}
+
+/* Feeds / doubts */
+.subtabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.subtab{padding:9px 14px;border-radius:999px;border:1px solid #d9d6ee;background:#fff;font-weight:600;cursor:pointer;font-size:.9rem;font-family:inherit}
+.subtab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.post-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;font-size:.88rem}
+.answer{background:#ecfdf5;border-radius:8px;padding:8px 10px;margin-top:8px}
+.doubt.solved{border-left:4px solid var(--green)}
+.doubt.open{border-left:4px solid var(--orange)}
+
+/* Table */
+.table{width:100%;border-collapse:collapse;font-size:.92rem}
+.table th,.table td{text-align:left;padding:8px 10px;border-bottom:1px solid #eef0f6}
+.table th{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+
+/* Teacher Hood */
+.live-banner{background:#dcfce7;color:#166534;font-weight:700;padding:12px 16px;border-radius:12px;margin-bottom:16px;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.75}}
+.quiz-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #eef0f6;font-size:.9rem}
+.att-list{list-style:none;font-size:.9rem}
+.att-list li{padding:5px 0;border-bottom:1px dashed #eef0f6}
+
+/* Calendar */
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-dow{text-align:center;font-size:.75rem;font-weight:700;color:var(--muted);padding:4px 0}
+.cal-day{position:relative;padding:10px 4px;border:1px solid #eef0f6;border-radius:10px;background:#fff;cursor:pointer;font:inherit;font-weight:600}
+.cal-day:hover{border-color:var(--primary)}
+.cal-day.sel{background:var(--primary);color:#fff;border-color:var(--primary)}
+.cal-day .dot{position:absolute;top:4px;right:4px;background:#f59e0b;color:#fff;font-size:.62rem;border-radius:999px;padding:1px 5px}
+.topic-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed #eef0f6;font-size:.93rem}
+.topic-row label{display:flex;gap:8px;align-items:center;flex:1}
+.topic-row input[type=checkbox]{width:auto;margin:0}
+.add-topic{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.add-topic input{flex:1;min-width:160px;margin-bottom:0}
+
+/* Admin */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:16px}
+.stat{text-align:center}
+.stat h3{font-size:2rem;color:var(--primary)}
+
+/* Quiz modal */
+.modal{position:fixed;inset:0;background:rgba(15,12,41,.55);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
+.modal-box{background:#fff;border-radius:18px;padding:24px;width:100%;max-width:520px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.modal-head h3{font-size:1.05rem;margin:0}
+#quiz-question{margin:10px 0 14px}
+.quiz-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.opt{text-align:left;padding:11px 14px;border-radius:10px;border:1.5px solid #d9d6ee;background:#fff;cursor:pointer;font:inherit}
+.opt:hover{border-color:var(--primary)}
+.opt.selected{border-color:var(--primary);background:#f0ebff;font-weight:700}
+
+/* Toast */
+.toast{position:fixed;bottom:22px;right:22px;z-index:60;background:#14122b;color:#fff;padding:13px 18px;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.3);font-weight:600;max-width:340px}
+.toast.success{border-left:5px solid var(--green)}
+.toast.error{border-left:5px solid var(--red)}
+
+@media (max-width:900px){
+  .app{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;align-items:center}
+  #nav{flex-direction:row;flex-wrap:wrap}
+  .nav-btn{width:auto}
+  .views{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= AUTH SCREEN ================= -->
+<div id="auth-screen" class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-brand">🌌 <span>Nebula Education</span></div>
+    <h1 id="auth-title">Welcome back</h1>
+    <p class="auth-sub">Smart School Platform — Student · Teacher · HM · MEO · DEO</p>
+
+    <div class="auth-tabs">
+      <button id="tab-login" class="active" type="button">Login</button>
+      <button id="tab-register" type="button">Register</button>
+    </div>
+
+    <form id="login-form">
+      <label>Email <input id="login-email" type="email" required placeholder="you@school.edu"></label>
+      <label>Password <input id="login-password" type="password" required minlength="6" placeholder="••••••••"></label>
+      <button class="btn btn-primary btn-block" type="submit">Login</button>
+      <p id="login-error" class="form-error"></p>
+    </form>
+
+    <form id="register-form" class="hidden">
+      <label>Full name <input id="reg-name" required placeholder="Your name"></label>
+      <label>Email <input id="reg-email" type="email" required placeholder="you@school.edu"></label>
+      <label>Password <input id="reg-password" type="password" required minlength="6"></label>
+      <label>Role
+        <select id="reg-role">
+          <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
+          <option value="hm">Head Master (HM)</option>
+          <option value="meo">Mandal Education Officer (MEO)</option>
+          <option value="deo">District Education Officer (DEO)</option>
+        </select>
+      </label>
+      <div id="reg-student-fields" class="role-fields">
+        <label>Student ID <input id="reg-student-id" placeholder="STU-2025-001"></label>
+        <label>Class <input id="reg-class" placeholder="Class 10-A"></label>
+      </div>
+      <div id="reg-teacher-fields" class="role-fields hidden">
+        <label>Subject <input id="reg-subject" placeholder="Mathematics"></label>
+        <label>Class <input id="reg-class-t" placeholder="Class 10-A"></label>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Create account</button>
+      <p id="register-error" class="form-error"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ================= APP SHELL ================= -->
+<div id="app" class="app hidden">
+  <aside class="sidebar">
+    <div class="brand">🌌 <span>Nebula Education</span></div>
+    <nav id="nav"></nav>
+    <button id="logout-btn" class="btn btn-ghost btn-block" type="button">Logout</button>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h2 id="view-title">Dashboard</h2>
+      <div class="user-chip">
+        <span id="user-name"></span>
+        <span id="user-role" class="badge"></span>
+      </div>
+    </header>
+
+    <main class="views">
+      <section id="view-profile" class="view"><div id="profile-root"></div></section>
+      <section id="view-inclass" class="view"><div id="inclass-root"></div></section>
+      <section id="view-offclass" class="view"><div id="offclass-root"></div></section>
+      <section id="view-social" class="view"><div id="social-root"></div></section>
+      <section id="view-doubts" class="view"><div id="doubts-root"></div></section>
+      <section id="view-projects" class="view"><div id="projects-root"></div></section>
+      <section id="view-classroom" class="view"><div id="classroom-root"></div></section>
+      <section id="view-timetable" class="view"><div id="timetable-root"></div></section>
+      <section id="view-admin" class="view"><div id="admin-root"></div></section>
+    </main>
+  </div>
+</div>
+
+<!-- ================= HARDWARE QUIZ MODAL ================= -->
+<div id="quiz-modal" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>🖥️ Hardware Quiz Pop-up</h3>
+      <button id="quiz-close" class="icon-btn" type="button">✕</button>
+    </div>
+    <p id="quiz-meta" class="muted"></p>
+    <h4 id="quiz-question"></h4>
+    <div id="quiz-options" class="quiz-opts"></div>
+    <button id="quiz-submit" class="btn btn-primary btn-block" type="button">Submit Answer</button>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<!-- ================= FIREBASE CDN (official, versioned) ================= -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  signOut, onAuthStateChanged, updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc,
+  query, where, orderBy, limit, onSnapshot, increment, arrayUnion, arrayRemove
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* ============================================================
+   ⚠️ PASTE YOUR FIREBASE CONFIG HERE (and nowhere else)
+   Firebase Console → Project settings → Your apps → Web app
+============================================================ */
+const firebaseConfig = {
+  apiKey: "PASTE_YOUR_API_KEY",
+  authDomain: "PASTE_YOUR_PROJECT.firebaseapp.com",
+  projectId: "PASTE_YOUR_PROJECT_ID",
+  storageBucket: "PASTE_YOUR_PROJECT.appspot.com",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
+/* ============================================================ */
+
+const CONFIGURED = !String(firebaseConfig.apiKey).includes("PASTE_");
+
+let app, auth, db;
+if (CONFIGURED) {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+}
+
+/* ================= tiny helpers ================= */
+const $  = (sel, scope = document) => scope.querySelector(sel);
+const $$ = (sel, scope = document) => Array.from(scope.querySelectorAll(sel));
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+function timeAgo(ts) {
+  const m = Math.floor((Date.now() - Number(ts)) / 60000);
+  if (m < 1) return "just now";
+  if (m < 60) return m + "m ago";
+  if (m < 1440) return Math.floor(m / 60) + "h ago";
+  return Math.floor(m / 1440) + "d ago";
+}
+function starsHtml(n) { return "★".repeat(n) + "☆".repeat(5 - n); }
+
+let toastTimer;
+function showToast(msg, type = "success") {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.className = "toast " + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = "toast hidden"; }, 3400);
+}
+window.addEventListener("unhandledrejection", e => {
+  console.error(e.reason);
+  showToast("Error: " + (e.reason?.message ?? e.reason), "error");
+});
+
+function authError(err) {
+  const code = err?.code ?? "";
+  const map = {
+    "auth/invalid-email": "Invalid email address.",
+    "auth/user-not-found": "No account found with this email.",
+    "auth/wrong-password": "Incorrect password.",
+    "auth/invalid-credential": "Invalid email or password.",
+    "auth/email-already-in-use": "This email is already registered.",
+    "auth/weak-password": "Password must be at least 6 characters.",
+    "auth/too-many-requests": "Too many attempts. Try again later.",
+    "auth/operation-not-allowed": "Enable Email/Password sign-in in Firebase Console → Authentication."
+  };
+  return map[code] ?? "Something went wrong. Please try again.";
+}
+
+/* ================= state ================= */
+let profile = null;
+let navItems = [];
+let currentSession = null;
+let tabConnected = false;
+let ratingStars = 0;
+let hwLog = [];
+let quizCache = [];
+let contentItems = [];
+let contentUnsub = null;
+let contentSessionId = "";
+let topicsByDate = {};
+let calYear = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+let selectedDate = todayStr();
+let viewListeners = [];
+let pendingProfile = null;
+let quizState = { quiz: null, points: 0, exam: "", sessionId: "", selected: -1 };
+
+const NAV = {
+  student: [
+    { id: "profile",   label: "My Profile",           icon: "👤" },
+    { id: "inclass",   label: "In Class (3-Device)",  icon: "📶" },
+    { id: "offclass",  label: "Off Class",            icon: "📚" },
+    { id: "social",    label: "Student LinkedIn",     icon: "💬" },
+    { id: "doubts",    label: "Post Doubts",          icon: "❓" },
+    { id: "projects",  label: "Display Project",      icon: "🛠️" }
+  ],
+  teacher: [
+    { id: "profile",   label: "My Profile",           icon: "👤" },
+    { id: "classroom", label: "Class Room (Hood)",    icon: "🏫" },
+    { id: "social",    label: "Teacher LinkedIn",     icon: "💬" },
+    { id: "doubts",    label: "Doubt Solve",          icon: "❓" },
+    { id: "timetable", label: "Time Table",           icon: "🗓️" }
+  ],
+  hm:   [{ id: "admin", label: "Overview", icon: "📊" }],
+  meo:  [{ id: "admin", label: "Overview", icon: "📊" }],
+  deo:  [{ id: "admin", label: "Overview", icon: "📊" }]
+};
+
+const DEMO_QUIZZES = [
+  { id: "d1", subject: "General", question: "What does CPU stand for?",
+    options: ["Central Process Unit", "Central Processing Unit", "Computer Personal Unit", "Central Program Unit"], correctIndex: 1 },
+  { id: "d2", subject: "General", question: "Which planet is known as the Red Planet?",
+    options: ["Venus", "Mars", "Jupiter", "Mercury"], correctIndex: 1 },
+  { id: "d3", subject: "Mathematics", question: "What is 12 × 8?",
+    options: ["86", "96", "108", "92"], correctIndex: 1 }
+];
+
+function clearAll() {
+  viewListeners.forEach(u => { try { u(); } catch (e) {} });
+  viewListeners = [];
+  if (contentUnsub) { try { contentUnsub(); } catch (e) {} contentUnsub = null; }
+  contentSessionId = "";
+  currentSession = null;
+}
+
+async function getQuizzes() {
+  if (quizCache.length) return quizCache;
+  if (!CONFIGURED) return DEMO_QUIZZES;
+  const snap = await getDocs(collection(db, "quizzes"));
+  quizCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  if (!quizCache.length) quizCache = DEMO_QUIZZES;
+  return quizCache;
+}
+
+/* ================= auth flow ================= */
+if (CONFIGURED) {
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) { profile = null; clearAll(); showAuth(); return; }
+    let snap = await getDoc(doc(db, "users", user.uid));
+    if (!snap.exists()) {
+      if (pendingProfile) {
+        await setDoc(doc(db, "users", user.uid), { ...pendingProfile, uid: user.uid });
+        pendingProfile = null;
+        snap = await getDoc(doc(db, "users", user.uid));
+      } else {
+        await sleep(1000); // wait in case write is slow
+        snap = await getDoc(doc(db, "users", user.uid));
+        if (!snap.exists()) {
+          showToast("Profile not found — please register.", "error");
+          await signOut(auth);
+          return;
+        }
+      }
+    }
+    profile = { uid: user.uid, ...snap.data() };
+    showApp();
+  });
+}
+
+function showAuth() {
+  $("#app").classList.add("hidden");
+  $("#auth-screen").classList.remove("hidden");
+}
+
+function showApp() {
+  if (!profile) return;
+  $("#auth-screen").classList.add("hidden");
+  $("#app").classList.remove("hidden");
+  $("#user-name").textContent = profile.name;
+  const badge = $("#user-role");
+  badge.textContent = String(profile.role).toUpperCase();
+  badge.className = "badge role-" + profile.role;
+  buildNav();
+  showView(navItems[0].id);
+}
+
+function buildNav() {
+  navItems = NAV[profile.role] ?? NAV.student;
+  const nav = $("#nav");
+  nav.innerHTML = navItems.map(n =>
+    `<button class="nav-btn" data-view="${n.id}"><span>${n.icon}</span>${esc(n.label)}</button>`).join("");
+  $$("#nav .nav-btn").forEach(b =>
+    b.addEventListener("click", () => showView(b.dataset.view)));
+}
+
+function showView(id) {
+  clearAll();
+  $$(".view").forEach(v => v.classList.remove("active"));
+  const section = $("#view-" + id);
+  if (section) section.classList.add("active");
+  $$("#nav .nav-btn").forEach(b => b.classList.toggle("active", b.dataset.view === id));
+  const item = navItems.find(n => n.id === id);
+  $("#view-title").textContent = item ? item.label : "";
+  const loaders = {
+    profile: renderProfile, inclass: renderInclass, offclass: renderOffclass,
+    social: renderSocial, doubts: renderDoubts, projects: renderProjects,
+    classroom: renderClassroom, timetable: renderTimetable, admin: renderAdmin
+  };
+  if (loaders[id]) loaders[id]();
+}
+
+/* ================= 1 · PROFILE ================= */
+async function renderProfile() {
+  if (!profile) return;
+  const root = $("#profile-root");
+  root.innerHTML = `<div class="loading">Loading profile…</div>`;
+
+  const usersSnap = await getDocs(collection(db, "users"));
+  const users = usersSnap.docs.map(d => d.data());
+  const students = users.filter(u => u.role === "student").sort((a, b) => (b.airScore ?? 0) - (a.airScore ?? 0));
+  const myRank = students.findIndex(s => s.uid === profile.uid) + 1;
+
+  let html = `<div class="grid-2">
+    <div class="card">
+      <h3>👤 My Profile</h3>
+      <div class="profile-row"><span>Name</span><b>${esc(profile.name)}</b></div>
+      <div class="profile-row"><span>Email</span><b>${esc(profile.email)}</b></div>
+      <div class="profile-row"><span>Role</span><b>${esc(String(profile.role).toUpperCase())}</b></div>
+      ${profile.role === "student" ? `
+        <div class="profile-row"><span>Student ID</span><b>${esc(profile.studentId ?? "—")}</b></div>
+        <div class="profile-row"><span>Class</span><b>${esc(profile.className ?? "—")}</b></div>
+        <div class="profile-row"><span>⚡ Air Score</span><b class="air">${profile.airScore ?? 0}</b></div>
+        <div class="profile-row"><span>Leaderboard Rank</span><b>${myRank ? "#" + myRank : "—"}</b></div>` : ""}
+      ${profile.role === "teacher" ? `
+        <div class="profile-row"><span>Subject</span><b>${esc(profile.subject ?? "—")}</b></div>
+        <div class="profile-row"><span>Class</span><b>${esc(profile.className ?? "—")}</b></div>` : ""}
+    </div>
+    <div class="card">
+      <h3>🏆 Air Score Leaderboard (Student ID · Air Score)</h3>
+      <ol class="leaderboard">
+        ${students.slice(0, 10).map((s, i) => `
+          <li class="${s.uid === profile.uid ? "me" : ""}">
+            <span class="rank">${["🥇", "🥈", "🥉"][i] ?? "#" + (i + 1)}</span>
+            <span class="name">${esc(s.name)} <span class="muted">(${esc(s.studentId ?? "—")})</span></span>
+            <span class="score">${s.airScore ?? 0}</span>
+          </li>`).join("") || `<li class="muted">No students yet.</li>`}
+      </ol>
+    </div>
+  </div>`;
+
+  if (profile.role === "teacher") {
+    const rSnap = await getDocs(query(collection(db, "ratings"), orderBy("createdAt", "desc"), limit(100)));
+    const mine = rSnap.docs.map(d => d.data()).filter(r => r.teacherUid === profile.uid);
+    const avg = mine.length ? mine.reduce((s, r) => s + (Number(r.stars) || 0), 0) / mine.length : 0;
+    const badges = [];
+    if (avg >= 4.5) badges.push("⭐ Star Educator");
+    if (avg >= 4) badges.push("🏅 Inspiring Teacher");
+    if (mine.length >= 5) badges.push("💬 Top Comments");
+    html += `
+    <div class="card">
+      <h3>Teacher Performance — Achievements · Rating · Top Comments</h3>
+      <div class="rating-summary">
+        <div class="big-rating">${avg.toFixed(1)}<small>/5</small></div>
+        <div>${starsHtml(Math.round(avg))}<br><span class="muted">${mine.length} rating(s)</span></div>
+      </div>
+      <div class="badges">${badges.map(b => `<span class="badge green">${b}</span>`).join("") || `<span class="badge muted">No achievements yet</span>`}</div>
+      <h4>Top comments</h4>
+      <ul class="comment-list">
+        ${mine.slice(0, 5).map(r => `<li><b>${esc(r.studentName ?? "Student")}</b> ${starsHtml(Number(r.stars) || 0)}
+          <p>${esc(r.comment ?? "")}</p></li>`).join("") || `<li class="muted">No comments yet.</li>`}
+      </ul>
+    </div>`;
+  }
+  root.innerHTML = html;
+}
+
+/* ================= 2 · IN CLASS — 3-DEVICE SYSTEM ================= */
+function renderInclass() {
+  if (!profile) return;
+  tabConnected = false; hwLog = []; ratingStars = 0;
+  const root = $("#inclass-root");
+  root.innerHTML = `
+    <p class="hint">🖱️ 3-Device System — <b class="t-tab">Tab</b> ⇄ <b class="t-hw">Hardware</b> ⇄ <b class="t-hood">Teacher's Hood</b> (interlinked, real-time).
+    <br>⚠️ Your teacher &amp; you must use the <b>same class name</b> (e.g. "Class 10-A").</p>
+    <div class="grid-3">
+      <div class="card device dev-tab"><h3>📱 Tab</h3><div id="tab-body"><div class="loading">…</div></div></div>
+      <div class="card device dev-hw"><h3>🖥️ Hardware</h3><div id="hw-body"><div class="loading">…</div></div></div>
+      <div class="card device dev-hood"><h3>🎓 Teacher's Hood</h3><div id="hood-body"><div class="loading">…</div></div></div>
+    </div>
+    <div class="card hidden" id="rate-card">
+      <h3>⭐ Rate today's teacher (Tab → end of class)</h3>
+      <div class="star-row" id="star-row">
+        ${[1, 2, 3, 4, 5].map(v => `<button class="star" data-v="${v}" type="button">★</button>`).join("")}
+      </div>
+      <textarea class="js-rate-comment" rows="2" placeholder="Leave a comment (optional)"></textarea>
+      <button class="btn btn-primary js-rate-send" type="button">Submit Rating</button>
+    </div>`;
+
+  $("#star-row").addEventListener("click", (e) => {
+    const b = e.target.closest(".star");
+    if (!b) return;
+    ratingStars = Number(b.dataset.v);
+    $$("#star-row .star").forEach(s => s.classList.toggle("on", Number(s.dataset.v) <= ratingStars));
+  });
+  $(".js-rate-send").addEventListener("click", submitRating);
+
+  const qy = query(collection(db, "sessions"), where("active", "==", true));
+  const unsub = onSnapshot(qy, (snap) => {
+    const list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    currentSession = list.find(s => s.className === profile.className) ?? null;
+    if (currentSession) subscribeContents(currentSession.id);
+    paintDevices();
+  }, (err) => showToast("Firestore: " + err.message, "error"));
+  viewListeners.push(unsub);
+}
+
+function subscribeContents(sid) {
+  if (contentUnsub && contentSessionId === sid) return;
+  if (contentUnsub) { try { contentUnsub(); } catch (e) {} }
+  contentSessionId = sid;
+  const qy = query(collection(db, "contents"), orderBy("createdAt", "desc"), limit(20));
+  contentUnsub = onSnapshot(qy, (snap) => {
+    contentItems = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(it => it.sessionId === sid);
+    const box = document.getElementById("tab-content");
+    if (!box) return;
+    box.innerHTML = contentItems.map(it => {
+      if (it.type === "test") {
+        return `<div class="content-item test"><b>🧪 Class Test</b><p>${esc(it.text)}</p>
+          <button class="btn btn-primary js-open-test" data-id="${it.id}" type="button">Open Test</button></div>`;
+      }
+      if (it.type === "video") {
+        return `<div class="content-item"><b>🎬 Video from teacher</b>
+          <a href="${esc(it.text)}" target="_blank" rel="noopener">${esc(it.text)}</a></div>`;
+      }
+      return `<div class="content-item"><b>📒 Note from teacher</b><p>${esc(it.text)}</p></div>`;
+    }).join("") || `<p class="muted">No content pushed yet.</p>`;
+
+    box.querySelectorAll(".js-open-test").forEach(b =>
+      b.addEventListener("click", () => {
+        const it = contentItems.find(x => x.id === b.dataset.id);
+        if (it && it.quiz) showQuizModal({ id: it.id, ...it.quiz }, 10, "Class Test", it.sessionId);
+      }));
+  });
+}
+
+function paintDevices() {
+  const tabBody = $("#tab-body");
+  const hwBody = $("#hw-body");
+  const hoodBody = $("#hood-body");
+  const rateCard = $("#rate-card");
+  if (!tabBody) return;
+
+  if (!currentSession) {
+    tabBody.innerHTML = `<p class="muted">No live class for your class right now. Your teacher starts the class from the Teacher's Hood.</p>`;
+    hwBody.innerHTML = `<p class="muted">Hardware idle — waiting for a session.</p>`;
+    hoodBody.innerHTML = `<p class="conn off">🔴 Teacher is NOT logged in to the Hood</p>`;
+    rateCard.classList.add("hidden");
+    return;
+  }
+
+  tabBody.innerHTML = `
+    <p class="conn ${tabConnected ? "on" : "off"}">${tabConnected ? "🟢 Connected to Hardware" : "🔴 Not connected"}</p>
+    ${tabConnected
+      ? `<button class="btn js-tab-disconnect" type="button">Disconnect</button>`
+      : `<button class="btn btn-primary js-tab-connect" type="button">🔗 Connect to Hardware</button>`}
+    <div class="content-stream" id="tab-content"><p class="muted">No content pushed yet.</p></div>`;
+  tabBody.querySelector(".js-tab-connect").addEventListener("click", connectTab);
+  tabBody.querySelector(".js-tab-disconnect").addEventListener("click", () => {
+    tabConnected = false;
+    hwLog.push("⚠️ " + profile.name + " disconnected from Hardware");
+    paintDevices();
+  });
+
+  hwBody.innerHTML = `
+    <div class="profile-row"><span>Teacher</span><b>${esc(currentSession.teacherName)}</b></div>
+    <div class="profile-row"><span>Subject</span><b>${esc(currentSession.subject)}</b></div>
+    <div class="profile-row"><span>Started</span><b>${timeAgo(currentSession.startedAt)}</b></div>
+    <div class="profile-row"><span>Your attendance</span><b>${tabConnected ? "✅ Present (Tab–Hardware)" : "⏳ Pending"}</b></div>
+    <button class="btn js-hw-quiz" type="button">Simulate: student not listening → pop quiz</button>
+    <h4>Activity log</h4>
+    <ul class="hw-log">${hwLog.slice(-6).map(l => `<li>${esc(l)}</li>`).join("") || `<li class="muted">No activity yet.</li>`}</ul>`;
+  hwBody.querySelector(".js-hw-quiz").addEventListener("click", popHardwareQuiz);
+
+  hoodBody.innerHTML = `
+    <p class="conn on">🟢 Teacher logged in to Hood — session LIVE</p>
+    <div class="profile-row"><span>Teacher attendance</span><b>✅ Marked (Hood login)</b></div>
+    <p class="hint" style="margin-top:8px">Teacher can push notes, videos and class tests to your Tab from the Hood.</p>`;
+
+  rateCard.classList.remove("hidden");
+}
+
+async function connectTab() {
+  if (!profile || !currentSession) return;
+  const session = currentSession;
+  const today = todayStr();
+  const snap = await getDocs(query(collection(db, "attendance"), where("date", "==", today)));
+  const already = snap.docs.some(d => d.data().uid === profile.uid && d.data().sessionId === session.id);
+  if (!already) {
+    await addDoc(collection(db, "attendance"), {
+      date: today, uid: profile.uid, name: profile.name, role: "student",
+      status: "present", method: "tab-hardware", sessionId: session.id, createdAt: Date.now()
+    });
+  }
+  tabConnected = true;
+  hwLog.push("✅ " + profile.name + ": Tab linked to Hardware — attendance marked (distance OK)");
+  paintDevices();
+  showToast("Attendance marked via Tab ⇄ Hardware link ✅");
+}
+
+async function submitRating() {
+  if (!profile || !currentSession) { showToast("No live class to rate", "error"); return; }
+  if (ratingStars === 0) { showToast("Pick a star rating first", "error"); return; }
+  const session = currentSession;
+  const comment = $(".js-rate-comment").value.trim();
+  await addDoc(collection(db, "ratings"), {
+    teacherUid: session.teacherUid, teacherName: session.teacherName,
+    studentUid: profile.uid, studentName: profile.name,
+    stars: ratingStars, comment, createdAt: Date.now()
+  });
+  $(".js-rate-comment").value = "";
+  showToast("Thanks for rating! ⭐");
+}
+
+async function popHardwareQuiz() {
+  const qs = await getQuizzes();
+  const q = qs[Math.floor(Math.random() * qs.length)];
+  hwLog.push("🔔 Hardware detected inattention → quiz popped on Tab");
+  paintDevices();
+  showQuizModal(q, 5, "Hardware Attention Check");
+}
+
+/* ================= 3 · OFF CLASS ================= */
+async function renderOffclass() {
+  if (!profile) return;
+  const root = $("#offclass-root");
+  root.innerHTML = `
+    <div class="subtabs">
+      <button class="subtab active" data-t="hw" type="button">📘 H.W / Assignments</button>
+      <button class="subtab" data-t="marks" type="button">📊 Marks</button>
+      <button class="subtab" data-t="quiz" type="button">🧠 Practice &amp; Quiz</button>
+    </div>
+    <div id="offclass-body"><div class="loading">Loading…</div></div>`;
+  const body = $("#offclass-body");
+  root.querySelectorAll(".subtab").forEach(b =>
+    b.addEventListener("click", () => {
+      root.querySelectorAll(".subtab").forEach(x => x.classList.remove("active"));
+      b.classList.add("active");
+      paintOff(b.dataset.t, body);
+    }));
+  await paintOff("hw", body);
+}
+
+async function paintOff(tab, body) {
+  body.innerHTML = `<div class="loading">Loading…</div>`;
+  if (tab === "hw") {
+    const snap = await getDocs(query(collection(db, "assignments"), orderBy("createdAt", "desc"), limit(50)));
+    body.innerHTML = snap.docs.map(d => {
+      const v = d.data();
+      return `<div class="card"><h3>📘 ${esc(v.title)}</h3>
+        <p class="muted">Subject: ${esc(v.subject ?? "—")} · Due: ${esc(v.dueDate ?? "—")} · posted by ${esc(v.by ?? "Teacher")}</p></div>`;
+    }).join("") || `<p class="muted">No assignments yet.</p>`;
+  } else if (tab === "marks") {
+    const snap = await getDocs(query(collection(db, "marks"), where("studentUid", "==", profile.uid)));
+    const rows = snap.docs.map(d => d.data()).sort((a, b) => Number(b.createdAt) - Number(a.createdAt));
+    body.innerHTML = rows.length ? `
+      <div class="card"><table class="table">
+        <thead><tr><th>Exam</th><th>Subject</th><th>Score</th><th>Date</th></tr></thead>
+        <tbody>${rows.map(m => `<tr>
+          <td>${esc(m.exam)}</td><td>${esc(m.subject)}</td>
+          <td>${String(m.score)} / ${String(m.total)}</td>
+          <td>${new Date(Number(m.createdAt)).toLocaleDateString()}</td></tr>`).join("")}
+        </tbody></table></div>`
+      : `<p class="muted">No marks yet. Attempt class tests &amp; quizzes to build your record.</p>`;
+  } else {
+    const qs = await getQuizzes();
+    body.innerHTML = qs.map((q, i) => `
+      <div class="card"><h3>${esc(q.question)}</h3><p class="muted">${esc(q.subject)}</p>
+      <button class="btn btn-primary js-attempt" data-i="${i}" type="button">Attempt</button></div>`).join("")
+      || `<p class="muted">No quizzes available.</p>`;
+    body.querySelectorAll(".js-attempt").forEach(b =>
+      b.addEventListener("click", () => {
+        const q = qs[Number(b.dataset.i)];
+        showQuizModal(q, 5, "Practice Quiz");
+      }));
+  }
+}
+
+/* ================= 4 · SOCIAL FEED ================= */
+function renderSocial() {
+  if (!profile) return;
+  const root = $("#social-root");
+  root.innerHTML = `
+    <div class="card">
+      <h3>${profile.role === "teacher" ? "💼 Teacher LinkedIn" : "💼 Student LinkedIn"}</h3>
+      <textarea class="js-post-text" rows="3" placeholder="Share something with your network…"></textarea>
+      <button class="btn btn-primary js-post-btn" type="button">Post</button>
+    </div>
+    <div id="feed"></div>`;
+  root.querySelector(".js-post-btn").addEventListener("click", async () => {
+    const ta = $(".js-post-text");
+    const content = ta.value.trim();
+    if (!content) { showToast("Write something first", "error"); return; }
+    await addDoc(collection(db, "feed"), {
+      authorUid: profile.uid, authorName: profile.name, role: profile.role,
+      content, likes: [], createdAt: Date.now()
+    });
+    ta.value = "";
+    showToast("Posted! 🚀");
+  });
+
+  const qy = query(collection(db, "feed"), orderBy("createdAt", "desc"), limit(50));
+  const unsub = onSnapshot(qy, (snap) => {
+    const feed = $("#feed");
+    feed.innerHTML = snap.docs.map(d => {
+      const p = d.data();
+      const likes = p.likes ?? [];
+      const liked = likes.includes(profile.uid);
+      return `<div class="card post">
+        <div class="post-head"><b>${esc(p.authorName)}</b>
+          <span class="badge">${esc(p.role)}</span>
+          <span class="muted">${timeAgo(p.createdAt)}</span></div>
+        <p>${esc(p.content)}</p>
+        <button class="btn btn-ghost js-like" data-id="${d.id}" type="button" style="margin-top:8px">${liked ? "❤️" : "🤍"} ${likes.length}</button>
+      </div>`;
+    }).join("") || `<p class="muted">No posts yet. Be the first!</p>`;
+    feed.querySelectorAll(".js-like").forEach(b =>
+      b.addEventListener("click", () => toggleLike(b.dataset.id)));
+  });
+  viewListeners.push(unsub);
+}
+
+async function toggleLike(id) {
+  if (!profile) return;
+  const ref = doc(db, "feed", id);
+  const snap = await getDoc(ref);
+  const likes = snap.data()?.likes ?? [];
+  if (likes.includes(profile.uid)) await updateDoc(ref, { likes: arrayRemove(profile.uid) });
+  else await updateDoc(ref, { likes: arrayUnion(profile.uid) });
+}
+
+/* ================= 5 · DOUBTS ================= */
+function renderDoubts() {
+  if (!profile) return;
+  const root = $("#doubts-root");
+  if (profile.role === "student") {
+    root.innerHTML = `
+      <div class="card">
+        <h3>❓ Post a Doubt</h3>
+        <input class="js-d-subject" placeholder="Subject (e.g., Mathematics)">
+        <textarea class="js-d-question" rows="3" placeholder="What is your doubt?"></textarea>
+        <button class="btn btn-primary js-d-post" type="button">Post Doubt</button>
+      </div>
+      <h3>My Doubts</h3>
+      <div id="doubt-list"></div>`;
+    root.querySelector(".js-d-post").addEventListener("click", async () => {
+      const subject = $(".js-d-subject").value.trim();
+      const question = $(".js-d-question").value.trim();
+      if (!subject || !question) { showToast("Fill subject and question", "error"); return; }
+      await addDoc(collection(db, "doubts"), {
+        studentUid: profile.uid, studentName: profile.name, subject, question,
+        status: "open", createdAt: Date.now()
+      });
+      $(".js-d-question").value = "";
+      showToast("Doubt posted — a teacher will answer soon ✅");
+    });
+  } else {
+    root.innerHTML = `<h3>❓ Doubt Solve — questions from students</h3><div id="doubt-list"></div>`;
+  }
+
+  const qy = query(collection(db, "doubts"), orderBy("createdAt", "desc"), limit(100));
+  const unsub = onSnapshot(qy, (snap) => {
+    let docs = snap.docs;
+    if (profile.role === "student") docs = docs.filter(d => d.data().studentUid === profile.uid);
+    const list = $("#doubt-list");
+    list.innerHTML = docs.map(d => {
+      const v = d.data();
+      return `<div class="card doubt ${v.status}">
+        <div class="post-head"><b>${esc(v.studentName)}</b>
+          <span class="badge">${esc(v.subject)}</span>
+          <span class="badge ${v.status === "solved" ? "green" : "orange"}">${esc(v.status)}</span>
+          <span class="muted">${timeAgo(v.createdAt)}</span></div>
+        <p><b>Q:</b> ${esc(v.question)}</p>
+        ${v.status === "solved"
+          ? `<p class="answer"><b>✅ ${esc(v.answeredBy ?? "Teacher")}:</b> ${esc(v.answer ?? "")}</p>`
+          : profile.role === "teacher"
+            ? `<textarea class="js-answer" rows="2" placeholder="Write your answer…"></textarea>
+               <button class="btn btn-primary js-answer-btn" data-id="${d.id}" type="button">Send Answer</button>`
+            : ""}
+      </div>`;
+    }).join("") || `<p class="muted">No doubts yet.</p>`;
+
+    if (profile.role === "teacher") {
+      list.querySelectorAll(".js-answer-btn").forEach(b =>
+        b.addEventListener("click", async () => {
+          const card = b.closest(".doubt");
+          const ta = card.querySelector(".js-answer");
+          const answer = ta.value.trim();
+          if (!answer) { showToast("Write an answer first", "error"); return; }
+          await updateDoc(doc(db, "doubts", b.dataset.id), {
+            status: "solved", answer, answeredBy: profile.name, answeredAt: Date.now()
+          });
+          showToast("Answer sent ✅");
+        }));
+    }
+  });
+  viewListeners.push(unsub);
+}
+
+/* ================= 6 · DISPLAY PROJECT ================= */
+function renderProjects() {
+  if (!profile) return;
+  const root = $("#projects-root");
+  root.innerHTML = `
+    <div class="card">
+      <h3>🛠️ Display Project</h3>
+      <input class="js-p-title" placeholder="Project title">
+      <textarea class="js-p-desc" rows="2" placeholder="Describe your project…"></textarea>
+      <input class="js-p-link" placeholder="Link (optional — GitHub, video…)">
+      <button class="btn btn-primary js-p-add" type="button">Publish Project</button>
+    </div>
+    <div id="project-list" class="grid-2"></div>`;
+  root.querySelector(".js-p-add").addEventListener("click", async () => {
+    const title = $(".js-p-title").value.trim();
+    const description = $(".js-p-desc").value.trim();
+    const link = $(".js-p-link").value.trim();
+    if (!title) { showToast("Title is required", "error"); return; }
+    await addDoc(collection(db, "projects"), {
+      studentUid: profile.uid, studentName: profile.name, title, description, link,
+      likedBy: [], createdAt: Date.now()
+    });
+    $(".js-p-title").value = ""; $(".js-p-desc").value = ""; $(".js-p-link").value = "";
+    showToast("Project published 🎉");
+  });
+
+  const qy = query(collection(db, "projects"), orderBy("createdAt", "desc"), limit(50));
+  const unsub = onSnapshot(qy, (snap) => {
+    const list = $("#project-list");
+    list.innerHTML = snap.docs.map(d => {
+      const p = d.data();
+      const likedBy = p.likedBy ?? [];
+      const liked = likedBy.includes(profile.uid);
+      return `<div class="card">
+        <h3>${esc(p.title)}</h3>
+        <p>${esc(p.description ?? "")}</p>
+        ${p.link ? `<a href="${esc(p.link)}" target="_blank" rel="noopener">🔗 Open link</a>` : ""}
+        <div class="post-head" style="margin-top:8px">
+          <small class="muted">by <b>${esc(p.studentName)}</b> · ${timeAgo(p.createdAt)}</small>
+          <button class="btn btn-ghost js-plike" data-id="${d.id}" type="button">${liked ? "❤️" : "🤍"} ${likedBy.length}</button>
+        </div>
+      </div>`;
+    }).join("") || `<p class="muted">No projects yet.</p>`;
+    list.querySelectorAll(".js-plike").forEach(b =>
+      b.addEventListener("click", async () => {
+        const ref = doc(db, "projects", b.dataset.id);
+        const s = await getDoc(ref);
+        const likedBy = s.data()?.likedBy ?? [];
+        if (likedBy.includes(profile.uid)) await updateDoc(ref, { likedBy: arrayRemove(profile.uid) });
+        else await updateDoc(ref, { likedBy: arrayUnion(profile.uid) });
+      }));
+  });
+  viewListeners.push(unsub);
+}
+
+/* ================= TEACHER · CLASS ROOM (Teacher's Hood) ================= */
+async function renderClassroom() {
+  if (!profile || profile.role !== "teacher") return;
+  const root = $("#classroom-root");
+  root.innerHTML = `<div class="loading">Loading your class…</div>`;
+  const snap = await getDocs(query(collection(db, "sessions"), where("active", "==", true)));
+  const mine = snap.docs.map(d => ({ id: d.id, ...d.data() })).find(s => s.teacherUid === profile.uid);
+  if (mine) { paintHoodLive(mine); return; }
+
+  root.innerHTML = `
+    <div class="card">
+      <h3>🎓 Teacher's Hood — Start a class</h3>
+      <p class="hint">Logging in to the Hood starts the session: Hardware marks YOUR attendance, and student Tabs get interlinked automatically. Students must register with the same class name.</p>
+      <div class="role-fields">
+        <label>Subject <input class="js-hood-subject" value="${esc(profile.subject ?? "")}"></label>
+        <label>Class <input class="js-hood-class" value="${esc(profile.className ?? "")}" placeholder="Class 10-A"></label>
+      </div>
+      <br>
+      <button class="btn btn-primary js-hood-start" type="button">🟢 Start Class (Hood Login)</button>
+    </div>`;
+  root.querySelector(".js-hood-start").addEventListener("click", startClass);
+}
+
+async function startClass() {
+  if (!profile) return;
+  const subject = $(".js-hood-subject").value.trim() || profile.subject || "General";
+  const className = $(".js-hood-class").value.trim() || profile.className || "Class 10-A";
+  const ref = await addDoc(collection(db, "sessions"), {
+    teacherUid: profile.uid, teacherName: profile.name, subject, className,
+    startedAt: Date.now(), active: true
+  });
+  const today = todayStr();
+  const asnap = await getDocs(query(collection(db, "attendance"), where("date", "==", today)));
+  const already = asnap.docs.some(d => d.data().uid === profile.uid && d.data().method === "hood-login");
+  if (!already) {
+    await addDoc(collection(db, "attendance"), {
+      date: today, uid: profile.uid, name: profile.name, role: "teacher",
+      status: "present", method: "hood-login", sessionId: ref.id, createdAt: Date.now()
+    });
+  }
+  showToast("Class started — Hood attendance marked ✅");
+  paintHoodLive({ id: ref.id, teacherUid: profile.uid, teacherName: profile.name, subject, className, startedAt: Date.now(), active: true });
+}
+
+function paintHoodLive(s) {
+  const root = $("#classroom-root");
+  root.innerHTML = `
+    <div class="live-banner">🔴 LIVE — ${esc(s.subject)} · ${esc(s.className)} · started ${timeAgo(s.startedAt)}</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>📤 Push content to student Tabs</h3>
+        <select class="js-c-type"><option value="note">📒 Note</option><option value="video">🎬 Video link</option></select>
+        <textarea class="js-c-text" rows="2" placeholder="Note text or video URL"></textarea>
+        <button class="btn btn-primary js-c-send" type="button">Push to Tab</button>
+        <hr>
+        <h3>📘 Post assignment / H.W</h3>
+        <input class="js-a-title" placeholder="Assignment title">
+        <input class="js-a-due" type="date">
+        <button class="btn js-a-add" type="button">Post Assignment</button>
+      </div>
+      <div class="card">
+        <h3>🧪 Class test</h3>
+        <p class="hint" style="margin-bottom:8px">Pick a question — it pops on all connected Tabs. Hardware records marks.</p>
+        <div class="js-quiz-pick"><span class="muted">Loading quizzes…</span></div>
+        <hr>
+        <h3>🖥️ Hardware panel</h3>
+        <p class="muted" style="margin-bottom:8px">🟢 No abnormal teacher activity detected · session monitored</p>
+        <button class="btn js-hw-syllabus" type="button">🤖 Run Hardware AI syllabus check (today)</button>
+        <h4>Today's attendance (Hardware log)</h4>
+        <div class="js-att-list muted">Loading…</div>
+        <hr>
+        <button class="btn btn-danger js-hood-end" type="button">⏹ End class</button>
+      </div>
+    </div>`;
+  wireHoodEvents(s);
+}
+
+function wireHoodEvents(s) {
+  const root = $("#classroom-root");
+
+  root.querySelector(".js-c-send").addEventListener("click", async () => {
+    const type = $(".js-c-type").value;
+    const text = $(".js-c-text").value.trim();
+    if (!text) { showToast("Write something to push", "error"); return; }
+    await addDoc(collection(db, "contents"), { sessionId: s.id, type, text, createdAt: Date.now() });
+    $(".js-c-text").value = "";
+    showToast("Pushed to student Tabs 📱");
+  });
+
+  root.querySelector(".js-a-add").addEventListener("click", async () => {
+    const title = $(".js-a-title").value.trim();
+    const due = $(".js-a-due").value;
+    if (!title) { showToast("Assignment title required", "error"); return; }
+    await addDoc(collection(db, "assignments"), {
+      title, dueDate: due, subject: s.subject, className: s.className, by: profile.name, createdAt: Date.now()
+    });
+    $(".js-a-title").value = "";
+    showToast("Assignment posted 📘");
+  });
+
+  root.querySelector(".js-hood-end").addEventListener("click", async () => {
+    await updateDoc(doc(db, "sessions", s.id), { active: false });
+    showToast("Class ended. Great work! 👏");
+    renderClassroom();
+  });
+
+  root.querySelector(".js-hw-syllabus").addEventListener("click", async () => {
+    const snap = await getDocs(query(collection(db, "syllabus"), where("date", "==", todayStr())));
+    const pending = snap.docs.filter(d => !d.data().doneByAI);
+    for (const d of pending) await updateDoc(d.ref, { doneByAI: true });
+    showToast("🤖 Hardware AI verified " + pending.length + " topic(s) for today");
+  });
+
+  const attBox = root.querySelector(".js-att-list");
+  getDocs(query(collection(db, "attendance"), where("date", "==", todayStr()))).then(snap => {
+    attBox.innerHTML = `<ul class="att-list">${snap.docs.map(d => {
+      const v = d.data();
+      return `<li>${esc(v.name)} — <b>${esc(v.status)}</b> <span class="muted">(${esc(v.method)})</span></li>`;
+    }).join("") || `<li>No entries yet.</li>`}</ul>`;
+  });
+
+  const pick = root.querySelector(".js-quiz-pick");
+  getQuizzes().then(qs => {
+    pick.innerHTML = qs.map((q, i) => `
+      <div class="quiz-row"><span>${esc(q.question)}</span>
+      <button class="btn js-send-test" data-i="${i}" type="button">Send to Tabs</button></div>`).join("");
+    pick.querySelectorAll(".js-send-test").forEach(b =>
+      b.addEventListener("click", async () => {
+        const quiz = qs[Number(b.dataset.i)];
+        await addDoc(collection(db, "contents"), {
+          sessionId: s.id, type: "test", text: quiz.question,
+          quiz: { question: quiz.question, options: quiz.options, correctIndex: quiz.correctIndex, subject: quiz.subject },
+          createdAt: Date.now()
+        });
+        showToast("Test sent to Tabs 🧪");
+      }));
+  });
+}
+
+/* ================= TEACHER · TIME TABLE ================= */
+function renderTimetable() {
+  if (!profile) return;
+  selectedDate = todayStr();
+  const root = $("#timetable-root");
+  root.innerHTML = `
+    <div class="grid-2">
+      <div class="card">
+        <div class="cal-head">
+          <button class="btn btn-ghost js-cal-prev" type="button">‹</button>
+          <h3 id="cal-title" style="margin:0"></h3>
+          <button class="btn btn-ghost js-cal-next" type="button">›</button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+      <div class="card"><h3 id="day-title"></h3><div id="day-body"></div></div>
+    </div>`;
+  $(".js-cal-prev").addEventListener("click", () => { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } paintCalendar(); });
+  $(".js-cal-next").addEventListener("click", () => { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } paintCalendar(); });
+  refreshTimetableData();
+}
+
+async function refreshTimetableData() {
+  const snap = await getDocs(collection(db, "syllabus"));
+  topicsByDate = {};
+  snap.docs.forEach(d => {
+    const v = d.data();
+    const arr = topicsByDate[v.date] ?? [];
+    arr.push({ id: d.id, ...v });
+    topicsByDate[v.date] = arr;
+  });
+  paintCalendar();
+  paintDay();
+}
+
+function paintCalendar() {
+  const grid = $("#cal-grid");
+  const monthName = new Date(calYear, calMonth, 1).toLocaleString("en", { month: "long" });
+  $("#cal-title").textContent = monthName + " " + calYear;
+  const startDow = new Date(calYear, calMonth, 1).getDay();
+  const days = new Date(calYear, calMonth + 1, 0).getDate();
+  let html = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(d => `<div class="cal-dow">${d}</div>`).join("");
+  for (let i = 0; i < startDow; i++) html += `<div></div>`;
+  for (let d = 1; d <= days; d++) {
+    const iso = calYear + "-" + String(calMonth + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+    const count = (topicsByDate[iso] ?? []).length;
+    html += `<button class="cal-day ${iso === selectedDate ? "sel" : ""}" data-date="${iso}" type="button">${d}${count ? `<span class="dot">${count}</span>` : ""}</button>`;
+  }
+  grid.innerHTML = html;
+  grid.querySelectorAll(".cal-day").forEach(b =>
+    b.addEventListener("click", () => {
+      selectedDate = b.dataset.date;
+      paintCalendar();
+      paintDay();
+    }));
+}
+
+async function paintDay() {
+  const bodyEl = $("#day-body");
+  $("#day-title").textContent = "🗓️ Syllabus — " + selectedDate;
+  const topics = topicsByDate[selectedDate] ?? [];
+  bodyEl.innerHTML = `
+    ${topics.map(t => `
+      <div class="topic-row">
+        <label><input type="checkbox" class="js-t-done" data-id="${t.id}" ${t.doneByTeacher ? "checked" : ""}/> ${esc(t.topic)}</label>
+        ${t.doneByAI ? `<span class="badge green">🤖 AI verified</span>` : `<span class="badge muted">AI pending</span>`}
+      </div>`).join("") || `<p class="muted">No topics planned for this date. Click a date on the calendar → syllabus checkboxes appear here.</p>`}
+    <div class="add-topic">
+      <input class="js-topic-text" placeholder="Add syllabus topic for this date">
+      <button class="btn btn-primary js-topic-add" type="button">Add</button>
+      <button class="btn js-ai-check" type="button">🤖 Hardware AI check</button>
+    </div>`;
+
+  bodyEl.querySelectorAll(".js-t-done").forEach(cb =>
+    cb.addEventListener("change", async () => {
+      await updateDoc(doc(db, "syllabus", cb.dataset.id), { doneByTeacher: cb.checked });
+      showToast("Syllabus updated ✅ (teacher + AI/hardware both can check)");
+      refreshTimetableData();
+    }));
+
+  bodyEl.querySelector(".js-topic-add").addEventListener("click", async () => {
+    const input = $(".js-topic-text", bodyEl);
+    const topic = input.value.trim();
+    if (!topic) return;
+    await addDoc(collection(db, "syllabus"), {
+      date: selectedDate, subject: profile.subject ?? "General", topic,
+      doneByTeacher: false, doneByAI: false, createdAt: Date.now()
+    });
+    input.value = "";
+    refreshTimetableData();
+  });
+
+  bodyEl.querySelector(".js-ai-check").addEventListener("click", async () => {
+    const list = topicsByDate[selectedDate] ?? [];
+    for (const t of list.filter(t => !t.doneByAI)) await updateDoc(doc(db, "syllabus", t.id), { doneByAI: true });
+    showToast("🤖 Hardware AI verified " + list.length + " topic(s)");
+    refreshTimetableData();
+  });
+}
+
+/* ================= HM / MEO / DEO · OVERVIEW ================= */
+async function renderAdmin() {
+  const root = $("#admin-root");
+  root.innerHTML = `<div class="loading">Loading overview…</div>`;
+  const usersSnap = await getDocs(collection(db, "users"));
+  const users = usersSnap.docs.map(d => d.data());
+  const students = users.filter(u => u.role === "student");
+  const teachers = users.filter(u => u.role === "teacher");
+  const top = [...students].sort((a, b) => (b.airScore ?? 0) - (a.airScore ?? 0)).slice(0, 5);
+  const attSnap = await getDocs(query(collection(db, "attendance"), where("date", "==", todayStr())));
+  const doubtsSnap = await getDocs(collection(db, "doubts"));
+  const openDoubts = doubtsSnap.docs.filter(d => d.data().status === "open").length;
+
+  root.innerHTML = `
+    <div class="stat-grid">
+      <div class="card stat"><h3>${students.length}</h3><p class="muted">Students</p></div>
+      <div class="card stat"><h3>${teachers.length}</h3><p class="muted">Teachers</p></div>
+      <div class="card stat"><h3>${openDoubts}</h3><p class="muted">Open doubts</p></div>
+      <div class="card stat"><h3>${attSnap.size}</h3><p class="muted">Attendance entries today</p></div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><h3>🏆 Top students (Air Score)</h3>
+        <ol class="leaderboard">${top.map((s, i) => `
+          <li><span class="rank">${["🥇", "🥈", "🥉"][i] ?? "#" + (i + 1)}</span>
+          <span class="name">${esc(s.name)}</span><span class="score">${s.airScore ?? 0}</span></li>`).join("")
+          || `<li class="muted">No students yet.</li>`}</ol>
+      </div>
+      <div class="card"><h3>📋 Today's attendance</h3>
+        <ul class="att-list">${attSnap.docs.map(d => {
+          const v = d.data();
+          return `<li>${esc(v.name)} — <b>${esc(v.status)}</b> <span class="muted">(${esc(v.method)})</span></li>`;
+        }).join("") || `<li class="muted">No entries today.</li>`}</ul>
+      </div>
+    </div>`;
+}
+
+/* ================= quiz modal wiring ================= */
+ $("#quiz-options").addEventListener("click", (e) => {
+  const btn = e.target.closest(".opt");
+  if (!btn) return;
+  $$("#quiz-options .opt").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+  quizState.selected = Number(btn.dataset.i);
+});
+
+ $("#quiz-close").addEventListener("click", () => { $("#quiz-modal").classList.add("hidden"); quizState.quiz = null; });
+
+ $("#quiz-submit").addEventListener("click", () => {
+  const quiz = quizState.quiz;
+  const selected = quizState.selected;
+  if (!quiz || selected < 0) { showToast("Select an answer first", "error"); return; }
+  const correct = selected === quiz.correctIndex;
+  const points = quizState.points;
+  const exam = quizState.exam;
+  const sessionId = quizState.sessionId;
+  quizState.quiz = null;
+  $("#quiz-modal").classList.add("hidden");
+  (async () => {
+    const gained = correct ? points : 1;
+    if (profile && CONFIGURED) {
+      await updateDoc(doc(db, "users", profile.uid), { airScore: increment(gained) });
+      profile.airScore = (profile.airScore ?? 0) + gained;
+      await addDoc(collection(db, "marks"), {
+        studentUid: profile.uid, studentName: profile.name, sessionId: sessionId ?? "",
+        subject: quiz.subject ?? "General", exam,
+        score: correct ? 1 : 0, total: 1, createdAt: Date.now()
+      });
+    }
+    showToast(correct ? "✅ Correct! +" + gained + " Air Score" : "❌ Wrong — +" + gained + " for participation",
+      correct ? "success" : "error");
+  })();
+});
+
+/* ================= auth forms wiring ================= */
+function switchAuth(which) {
+  $("#tab-login").classList.toggle("active", which === "login");
+  $("#tab-register").classList.toggle("active", which === "register");
+  $("#login-form").classList.toggle("hidden", which !== "login");
+  $("#register-form").classList.toggle("hidden", which !== "register");
+  $("#auth-title").textContent = which === "login" ? "Welcome back" : "Create your account";
+}
+ $("#tab-login").addEventListener("click", () => switchAuth("login"));
+ $("#tab-register").addEventListener("click", () => switchAuth("register"));
+
+ $("#reg-role").addEventListener("change", () => {
+  const role = $("#reg-role").value;
+  $("#reg-student-fields").classList.toggle("hidden", role !== "student");
+  $("#reg-teacher-fields").classList.toggle("hidden", role !== "teacher");
+});
+
+function guardConfig() {
+  if (CONFIGURED) return true;
+  showToast("⚠️ Paste your Firebase config at the top of the <script> section first!", "error");
+  return false;
+}
+
+ $("#login-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (!guardConfig()) return;
+  (async () => {
+    try {
+      await signInWithEmailAndPassword(auth,
+        $("#login-email").value.trim(),
+        $("#login-password").value);
+      $("#login-error").textContent = "";
+    } catch (err) {
+      $("#login-error").textContent = authError(err);
+    }
+  })();
+});
+
+ $("#register-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (!guardConfig()) return;
+  (async () => {
+    const name = $("#reg-name").value.trim();
+    const email = $("#reg-email").value.trim();
+    const password = $("#reg-password").value;
+    const role = $("#reg-role").value;
+    if (!name || !email || !password) return;
+    const data = { name, email, role, airScore: 0, createdAt: Date.now() };
+    if (role === "student") {
+      data.studentId = $("#reg-student-id").value.trim() || "STU-" + Date.now();
+      data.className = $("#reg-class").value.trim() || "Class 10-A";
+    }
+    if (role === "teacher") {
+      data.subject = $("#reg-subject").value.trim() || "General";
+      data.className = $("#reg-class-t").value.trim() || "Class 10-A";
+    }
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      try { await updateProfile(cred.user, { displayName: name }); } catch (e) {}
+      pendingProfile = data;
+      await setDoc(doc(db, "users", cred.user.uid), { ...data, uid: cred.user.uid });
+      $("#register-error").textContent = "";
+      showToast("Account created 🎉");
+    } catch (err) {
+      pendingProfile = null;
+      $("#register-error").textContent = authError(err);
+    }
+  })();
+});
+
+ $("#logout-btn").addEventListener("click", () => signOut(auth));
+
+/* ================= boot ================= */
+if (!CONFIGURED) {
+  document.body.insertAdjacentHTML("afterbegin",
+    `<div class="config-banner">⚠️ SETUP: Paste your Firebase config inside the &lt;script&gt; section (search for "PASTE_YOUR_API_KEY") — then reload.</div>`);
+}
+</script>
+</body>
+</html>
