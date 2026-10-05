@@ -6,6 +6,7 @@ export interface UserProfile {
   email: string;
   role: Role;
   studentId?: string;
+  teacherId?: string;
   className?: string;
   subject?: string;
   airScore: number;
