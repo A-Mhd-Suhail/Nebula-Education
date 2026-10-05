@@ -3,6 +3,15 @@ import { state } from "../state";
 import { $, esc, starsHtml } from "../helpers";
 import type { Rating, UserProfile } from "../types";
 
+/** Show the value, or a friendly "soon" message when not set yet. */
+function orSoon(value: string | number | undefined, soonText: string): string {
+  const v = typeof value === "number" ? value : String(value ?? "").trim();
+  if (v === "" || v === "0" || v === 0 || v === "undefined" || v === "null") {
+    return `<span class="muted">${esc(soonText)}</span>`;
+  }
+  return esc(v);
+}
+
 export async function renderProfile(): Promise<void> {
   if (!state.profile) return;
   const me = state.profile;
@@ -21,14 +30,14 @@ export async function renderProfile(): Promise<void> {
       <div class="profile-row"><span>Email</span><b>${esc(me.email)}</b></div>
       <div class="profile-row"><span>Role</span><b>${esc(me.role.toUpperCase())}</b></div>
       ${me.role === "student" ? `
-        <div class="profile-row"><span>Student ID</span><b>${esc(me.studentId ?? "—")}</b></div>
-        <div class="profile-row"><span>Class</span><b>${esc(me.className ?? "—")}</b></div>
-        <div class="profile-row"><span>⚡ Air Score</span><b class="air">${me.airScore ?? 0}</b></div>
-        <div class="profile-row"><span>Leaderboard Rank</span><b>${myRank ? "#" + myRank : "—"}</b></div>` : ""}
+        <div class="profile-row"><span>Student ID</span><b>${orSoon(me.studentId, "To be generated soon…")}</b></div>
+        <div class="profile-row"><span>Class</span><b>${orSoon(me.className, "To be updated soon…")}</b></div>
+        <div class="profile-row"><span>⚡ Air Score</span><b>${orSoon(me.airScore, "To be calculated soon…")}</b></div>
+        <div class="profile-row"><span>Leaderboard Rank</span><b>${myRank ? "#" + myRank : `<span class="muted">To be calculated soon…</span>`}</b></div>` : ""}
       ${me.role === "teacher" ? `
-        <div class="profile-row"><span>Teacher ID</span><b>${esc(me.teacherId ?? "—")}</b></div>
-        <div class="profile-row"><span>Subject</span><b>${esc(me.subject ?? "—")}</b></div>
-        <div class="profile-row"><span>Class</span><b>${esc(me.className ?? "—")}</b></div>` : ""}
+        <div class="profile-row"><span>Teacher ID</span><b>${orSoon(me.teacherId, "To be generated soon…")}</b></div>
+        <div class="profile-row"><span>Subject</span><b>${orSoon(me.subject, "To be updated soon…")}</b></div>
+        <div class="profile-row"><span>Class</span><b>${orSoon(me.className, "To be updated soon…")}</b></div>` : ""}
     </div>
     <div class="card">
       <h3>🏆 Air Score Leaderboard (Student ID · Air Score)</h3>
@@ -36,8 +45,8 @@ export async function renderProfile(): Promise<void> {
         ${students.slice(0, 10).map((s, i) => `
           <li class="${s.uid === me.uid ? "me" : ""}">
             <span class="rank">${["🥇", "🥈", "🥉"][i] ?? "#" + (i + 1)}</span>
-            <span class="name">${esc(s.name)} <span class="muted">(${esc(s.studentId ?? "—")})</span></span>
-            <span class="score">${s.airScore ?? 0}</span>
+            <span class="name">${esc(s.name)} <span class="muted">(${esc(s.studentId ?? "ID pending")})</span></span>
+            <span class="score">${s.airScore ? s.airScore : `<span class="muted" style="font-weight:400;font-size:.85rem">soon…</span>`}</span>
           </li>`).join("") || `<li class="muted">No students yet.</li>`}
       </ol>
     </div>
@@ -55,15 +64,18 @@ export async function renderProfile(): Promise<void> {
     <div class="card">
       <h3>Teacher Performance — Achievements · Rating · Top Comments</h3>
       <div class="rating-summary">
-        <div class="big-rating">${avg.toFixed(1)}<small>/5</small></div>
-        <div>${starsHtml(avg)}<br><span class="muted">${mine.length} rating(s)</span></div>
+        ${mine.length
+          ? `<div class="big-rating">${avg.toFixed(1)}<small>/5</small></div>
+             <div>${starsHtml(avg)}<br><span class="muted">${mine.length} rating(s)</span></div>`
+          : `<div class="big-rating">—</div>
+             <div><span class="muted">Rating: to be calculated soon…<br>(students rate you at the end of class)</span></div>`}
       </div>
       <div class="badges">${badges.map((b) => `<span class="badge green">${b}</span>`).join("")
-        || `<span class="badge muted">No achievements yet</span>`}</div>
+        || `<span class="badge muted">Achievements: to be unlocked soon…</span>`}</div>
       <h4>Top comments</h4>
       <ul class="comment-list">
         ${mine.slice(0, 5).map((r) => `<li><b>${esc(r.studentName ?? "Student")}</b> ${starsHtml(Number(r.stars) || 0)}
-          <p>${esc(r.comment ?? "")}</p></li>`).join("") || `<li class="muted">No comments yet.</li>`}
+          <p>${esc(r.comment ?? "")}</p></li>`).join("") || `<li class="muted">No comments yet — they will appear after students rate your class.</li>`}
       </ul>
     </div>`;
   }
