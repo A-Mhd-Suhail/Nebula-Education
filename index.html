@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌌 Nebula Education — Smart School Platform</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ================= AUTH SCREEN ================= -->
+  <div id="auth-screen" class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-brand">🌌 <span>Nebula Education</span></div>
+      <h1 id="auth-title">Welcome back</h1>
+      <p class="auth-sub">Smart School Platform — Student · Teacher · HM · MEO · DEO</p>
+
+      <div class="auth-tabs">
+        <button id="tab-login" class="active" type="button">Login</button>
+        <button id="tab-register" type="button">Register</button>
+      </div>
+
+      <form id="login-form">
+        <label>Email <input id="login-email" type="email" required placeholder="you@school.edu" /></label>
+        <label>Password <input id="login-password" type="password" required minlength="6" placeholder="••••••••" /></label>
+        <button class="btn btn-primary btn-block" type="submit">Login</button>
+        <p id="login-error" class="form-error"></p>
+      </form>
+
+      <form id="register-form" class="hidden">
+        <label>Full name <input id="reg-name" required placeholder="Your name" /></label>
+        <label>Email <input id="reg-email" type="email" required placeholder="you@school.edu" /></label>
+        <label>Password <input id="reg-password" type="password" required minlength="6" /></label>
+        <label>Role
+          <select id="reg-role">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="hm">Head Master (HM)</option>
+            <option value="meo">Mandal Education Officer (MEO)</option>
+            <option value="deo">District Education Officer (DEO)</option>
+          </select>
+        </label>
+        <div id="reg-student-fields" class="role-fields">
+          <label>Student ID <input id="reg-student-id" placeholder="STU-2025-001" /></label>
+          <label>Class <input id="reg-class" placeholder="Class 10-A" /></label>
+        </div>
+        <div id="reg-teacher-fields" class="role-fields hidden">
+          <label>Subject <input id="reg-subject" placeholder="Mathematics" /></label>
+          <label>Class <input id="reg-class-t" placeholder="Class 10-A" /></label>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Create account</button>
+        <p id="register-error" class="form-error"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= APP SHELL ================= -->
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand">🌌 <span>Nebula Education</span></div>
+      <nav id="nav"></nav>
+      <button id="logout-btn" class="btn btn-ghost btn-block" type="button">Logout</button>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <h2 id="view-title">Dashboard</h2>
+        <div class="user-chip">
+          <span id="user-name"></span>
+          <span id="user-role" class="badge"></span>
+        </div>
+      </header>
+
+      <main class="views">
+        <section id="view-profile" class="view"><div id="profile-root"></div></section>
+        <section id="view-inclass" class="view"><div id="inclass-root"></div></section>
+        <section id="view-offclass" class="view"><div id="offclass-root"></div></section>
+        <section id="view-social" class="view"><div id="social-root"></div></section>
+        <section id="view-doubts" class="view"><div id="doubts-root"></div></section>
+        <section id="view-projects" class="view"><div id="projects-root"></div></section>
+        <section id="view-classroom" class="view"><div id="classroom-root"></div></section>
+        <section id="view-timetable" class="view"><div id="timetable-root"></div></section>
+        <section id="view-admin" class="view"><div id="admin-root"></div></section>
+      </main>
+    </div>
+  </div>
+
+  <!-- ================= HARDWARE QUIZ MODAL ================= -->
+  <div id="quiz-modal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>🖥️ Hardware Quiz Pop-up</h3>
+        <button id="quiz-close" class="icon-btn" type="button">✕</button>
+      </div>
+      <p id="quiz-meta" class="muted"></p>
+      <h4 id="quiz-question"></h4>
+      <div id="quiz-options" class="quiz-opts"></div>
+      <button id="quiz-submit" class="btn btn-primary btn-block" type="button">Submit Answer</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
