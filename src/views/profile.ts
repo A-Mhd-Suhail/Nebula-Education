@@ -26,6 +26,7 @@ export async function renderProfile(): Promise<void> {
         <div class="profile-row"><span>⚡ Air Score</span><b class="air">${me.airScore ?? 0}</b></div>
         <div class="profile-row"><span>Leaderboard Rank</span><b>${myRank ? "#" + myRank : "—"}</b></div>` : ""}
       ${me.role === "teacher" ? `
+        <div class="profile-row"><span>Teacher ID</span><b>${esc(me.teacherId ?? "—")}</b></div>
         <div class="profile-row"><span>Subject</span><b>${esc(me.subject ?? "—")}</b></div>
         <div class="profile-row"><span>Class</span><b>${esc(me.className ?? "—")}</b></div>` : ""}
     </div>
