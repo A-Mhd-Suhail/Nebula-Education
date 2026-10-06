@@ -1,0 +1,17 @@
+--------------------------------------------------------------------------------
+[Unit]
+Description=Nebula Pi Publisher
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/nebula/pi
+ExecStart=/usr/bin/python3 /home/pi/nebula/pi/publisher.py
+Restart=always
+RestartSec=5
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+
