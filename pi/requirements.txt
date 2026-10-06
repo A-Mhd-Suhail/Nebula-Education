@@ -1,9 +1,0 @@
---------------------------------------------------------------------------------
-paho-mqtt==1.6.1
-psutil
-bleak
-numpy
-sounddevice
-opencv-python-headless
-firebase-admin
-
