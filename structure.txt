@@ -1,0 +1,48 @@
+# STRUCTURE.txt
+
+```
+nebula-education/
+├── index.html
+├── package.json                ← firebase bumped ^10.14.1
+├── vite.config.ts              ← NEW: chunk splitting (fixes 500kB warning)
+├── tsconfig.json
+├── vercel.json
+├── firebase.json               ← NEW: rules + functions + hosting deploy config
+├── firestore.indexes.json      ← NEW (empty, prevents deploy errors)
+├── .gitignore                  ← FIXED: service account + functions entries
+├── .env.example                ← + optional VAPID key for push
+├── .env                        ← LOCAL ONLY — never commit
+├── firestore.rules             ← FIXED: ratings rule
+├── storage.rules               ← FIXED: public-read board images (URLs never expire)
+├── README.md
+├── public/
+│   └── firebase-messaging-sw.js ← NEW: ONE service worker = offline shell + FCM push
+├── functions/
+│   ├── package.json
+│   └── index.js                ← 4 Cloud Functions (student AIR, teacher AIR, FCM, push-subscribe)
+├── pi/
+│   ├── config.json
+│   ├── publisher.py            ← signed-URL fix + make_public
+│   ├── requirements.txt
+│   └── nebula-pi.service
+├── esp32/
+│   └── tag.ino
+└── src/
+    ├── main.ts                 ← ALL Tier-1 fixes applied
+    ├── landing.ts              ← UI-only landing/auth presentation
+    ├── style.css                   ← liquid-glass UI theme; behavior unchanged
+    ├── firebase.ts             ← + offline persistence
+    ├── types.ts  state.ts  helpers.ts  store.ts  utils.ts
+    ├── catalog.ts  notify.ts  auditlog.ts
+    ├── airscore.ts             ← REWRITTEN: calls Cloud Functions
+    ├── quiz.ts  hardware.ts
+    └── views/
+        ├── profile.ts  student-dashboard.ts  inclass.ts  offclass.ts
+        ├── social.ts  doubts.ts  projects.ts  leaderboard.ts
+        ├── teacher-live.ts  board.ts  quiz-approvals.ts  assignments.ts
+        ├── classroom.ts  timetable.ts
+        ├── hm-dashboard.ts  hm-hardware.ts  hm-alerts.ts  hm-incidents.ts
+        ├── hm-teachers.ts  hm-students.ts  hm-reports.ts  hm-audit.ts
+        ├── hm-config.ts  analytics.ts
+(DO NOT have src/router.ts or src/views/auth.ts — deleted, dead code)
+```
