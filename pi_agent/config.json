@@ -1,0 +1,25 @@
+{
+  "gateway_ws": "ws://192.168.1.10:8000/ws/device/PI3-CLASS10A?token=PASTE_DEVICE_TOKEN",
+  "gateway_http": "http://192.168.1.10:8000",
+  "device_code": "PI3-CLASS10A",
+  "room_id": "Class 10-A",
+  "http_fallback_after": 4,
+  "heartbeat_sec": 20,
+
+  "ble":   { "enabled": true, "scan_sec": 3.0, "gap_sec": 12, "min_rssi": -95, "whitelist": [] },
+
+  "camera": {
+    "enabled": true,
+    "provider": "auto",
+    "usb_video": "/dev/video0",
+    "probe":  { "width": 320, "height": 240, "interval_sec": 2.5 },
+    "full":   { "width": 1024, "height": 768, "quality": 85 },
+    "board":  { "min_change": 0.02, "diff_threshold": 25, "stable_sec": 3.0, "cooldown_sec": 20, "ocr": true },
+    "incident": { "enabled": true, "motion_threshold": 0.16, "sustain_sec": 2.0, "cooldown_sec": 45 }
+  },
+
+  "noise":  { "enabled": true, "interval_sec": 4.0, "gain_db": 100.0, "warn_db": 60, "high_db": 75,
+              "buzzer_min_sec": 5, "buzzer_sec": 3, "device": "default", "rate": 8000 },
+
+  "buzzer": { "enabled": true, "pin": 17, "active_high": true }
+}

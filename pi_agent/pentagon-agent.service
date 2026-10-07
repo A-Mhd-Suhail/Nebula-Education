@@ -1,0 +1,15 @@
+[Unit]
+Description=Pentagon Pi3 Classroom Agent
+After=network-online.target bluetooth.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/pi/pentagon/pi_agent
+ExecStart=/home/pi/pentagon-env/bin/python3 /home/pi/pentagon/pi_agent/agent.py --config /home/pi/pentagon/pi_agent/config.json
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

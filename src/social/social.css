@@ -1,0 +1,48 @@
+/* ============ Social · Classroom · Study Connect (scoped sc-*) ============ */
+.sc-banner{height:120px;border-radius:14px;background:linear-gradient(120deg,#12305e,#0a1c3d);background-size:cover;background-position:center;margin-bottom:-34px;border:1px solid var(--line)}
+.sc-ava{border-radius:50%;object-fit:cover;border:2px solid rgba(80,170,255,.5);background:#0a1c3d}
+.sc-ava-txt{display:grid;place-items:center;color:#fff;font-family:var(--display);font-weight:700}
+.sc-badge{padding:3px 9px;border-radius:999px;font-size:.68rem;font-weight:700;font-style:normal}
+.sc-badge.gov{background:rgba(47,155,255,.18);color:#9fd0ff;border:1px solid rgba(47,155,255,.5)}
+.sc-badge.priv{background:rgba(52,211,153,.15);color:#6ee7b7;border:1px solid rgba(52,211,153,.45)}
+.sc-badge.role{background:rgba(255,154,46,.16);color:#ffc27a}
+.sc-badge.kind{background:rgba(167,139,250,.16);color:#c4b5fd}
+.sc-head{display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap}
+.sc-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;align-items:center}
+.sc-kv{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed rgba(80,170,255,.16);font-size:.9rem;align-items:center}
+.sc-kv b{color:#fff}
+.sc-bar{display:block;flex:1;height:8px;border-radius:99px;background:rgba(80,170,255,.15);overflow:hidden;min-width:80px}
+.sc-bar i{display:block;height:100%;background:linear-gradient(90deg,#2f9bff,#ff9a2e)}
+.sc-empty{color:var(--muted-dark);font-size:.9rem}
+.sc-mini{font-size:.78rem;color:var(--muted-dark)}
+.sc-danger{color:#f87171}
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.sc-form{display:grid;gap:8px}
+.sc-form label{font-size:.78rem;color:var(--muted-dark);margin:0}
+.sc-form input,.sc-form select,.sc-form textarea{margin:0}
+.sc-post-img{max-height:260px;width:100%;object-fit:cover;border-radius:10px;margin:8px 0}
+.sc-imp{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.sc-chip{padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:rgba(2,8,22,.5);color:#c5d9f2;font-size:.8rem;cursor:pointer}
+.sc-chip.on{border-color:var(--amber);color:#fff;background:rgba(255,154,46,.15)}
+.sc-author{border:0;background:none;padding:0;cursor:pointer;display:inline-flex}
+.sc-list{margin:6px 0 6px 18px;color:#c5d9f2;font-size:.9rem}
+.sc-chat{max-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:4px}
+.sc-msg{align-self:flex-start;max-width:80%;background:rgba(2,8,22,.7);border:1px solid var(--line);border-radius:10px;padding:7px 11px;font-size:.9rem}
+.sc-msg small{display:block;color:var(--muted-dark);font-size:.68rem}
+.sc-msg.mine{align-self:flex-end;background:rgba(47,155,255,.16);border-color:rgba(47,155,255,.4)}
+.sc-send{display:flex;gap:8px;align-items:center}
+.sc-send input{margin:0}
+.sc-thread{display:flex;gap:10px;align-items:center;width:100%;text-align:left;padding:8px 6px;border:0;border-bottom:1px dashed rgba(80,170,255,.16);background:none;color:inherit;cursor:pointer}
+.sc-video{position:relative;background:#02060f;border:1px solid var(--line);border-radius:12px;overflow:hidden;aspect-ratio:16/9}
+.sc-video video{width:100%;height:100%;object-fit:cover;display:block}
+.sc-video .tag{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.55);padding:2px 9px;border-radius:99px;font-size:.72rem;color:#fff}
+.sc-local{width:150px;border-radius:10px;border:1px solid var(--line);margin-top:8px;background:#02060f}
+.sc-db-row{display:flex;align-items:baseline;gap:16px;margin:8px 0}
+.sc-db{font:700 2.4rem/1 var(--display);color:#fff}
+.sc-db small{font-size:1rem;color:var(--muted-dark)}
+.sc-alarm{font-weight:800;letter-spacing:.06em;color:#34d399}
+.sc-alarm.on{color:#f87171;animation:scBlink 1s infinite}
+@keyframes scBlink{50%{opacity:.35}}
+.sc-check{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;border:1px solid rgba(255,154,46,.5);background:rgba(255,154,46,.1);border-radius:10px;margin-top:10px}
+.sc-note h4{margin:10px 0 4px;color:#e6f0ff}
+.sc-note ul{margin:0 0 8px 18px;color:#c5d9f2;font-size:.9rem}
