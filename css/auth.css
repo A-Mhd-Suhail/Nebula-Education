@@ -1,0 +1,62 @@
+/* THE PENTAGON - login / sign up pages */
+:root { --bg: #0b0d1a; --accent: #4f7cff; --text: #e8eeff; --muted: #9fb0d6; --line: rgba(120,150,230,.25); }
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 32px 18px; font-family: Inter, Arial, sans-serif; color: var(--text); background: transparent;
+}
+#net-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+.auth-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; margin-bottom: 22px; }
+.auth-brand img { width: 52px; height: 52px; object-fit: contain; }
+.auth-brand span { font-family: Orbitron, sans-serif; font-weight: 700; letter-spacing: .12em; font-size: 20px; }
+
+.auth-card {
+  width: 100%; max-width: 440px; padding: 30px 28px 26px; border-radius: 18px;
+  background: linear-gradient(180deg, rgba(20,28,64,.85), rgba(12,17,42,.88));
+  border: 1px solid var(--line); backdrop-filter: blur(8px);
+  box-shadow: 0 30px 70px -30px rgba(40,80,255,.5);
+}
+.auth-card h1 { margin: 0 0 6px; font-size: 24px; font-weight: 600; }
+.auth-sub { margin: 0 0 20px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+
+.role-tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 5px; border-radius: 12px; background: rgba(8,12,34,.7); border: 1px solid var(--line); margin-bottom: 20px; }
+.role-tab {
+  flex: 1 1 auto; border: 0; background: transparent; color: var(--muted); cursor: pointer;
+  padding: 9px 10px; border-radius: 8px; font: 500 13px Inter, Arial, sans-serif; transition: .2s;
+}
+.role-tab:hover { color: #fff; }
+.role-tab.active { background: var(--accent); color: #fff; }
+
+.auth-form label { display: block; margin-bottom: 14px; font-size: 13px; color: #c5d3f5; }
+.auth-form input[type=text], .auth-form input[type=email], .auth-form input[type=password] {
+  width: 100%; margin-top: 6px; padding: 12px 14px; border-radius: 10px; font: 400 15px Inter, Arial, sans-serif;
+  color: #fff; background: rgba(8,12,34,.8); border: 1px solid var(--line); outline: none; transition: border-color .2s, box-shadow .2s;
+}
+.auth-form input:focus { border-color: #7fa2ff; box-shadow: 0 0 0 3px rgba(79,124,255,.25); }
+.pw-wrap { position: relative; }
+.pw-wrap input { padding-right: 62px !important; }
+.pw-toggle {
+  position: absolute; right: 8px; bottom: 7px; border: 0; background: transparent; color: #8fb3ff;
+  font: 600 12px Inter, Arial, sans-serif; cursor: pointer; padding: 6px 8px;
+}
+.row { display: flex; align-items: center; justify-content: space-between; margin: 2px 0 18px; font-size: 13px; }
+.row label { margin: 0; display: flex; align-items: center; gap: 8px; color: var(--muted); }
+.row a, .terms a { color: #8fb3ff; text-decoration: none; }
+.row a:hover, .terms a:hover { text-decoration: underline; }
+.terms { display: flex !important; align-items: flex-start; gap: 8px; color: var(--muted) !important; line-height: 1.5; }
+.terms input { margin-top: 3px; }
+
+.btn-main {
+  width: 100%; padding: 13px; border: 0; border-radius: 10px; background: var(--accent); color: #fff;
+  font: 600 15px Inter, Arial, sans-serif; cursor: pointer; transition: background .2s;
+}
+.btn-main:hover { background: #3f69ee; }
+.auth-status { min-height: 20px; margin: 14px 0 0; font-size: 13px; text-align: center; color: #8fb3ff; }
+.auth-status.err { color: #ff8da1; }
+.auth-switch { margin: 18px 0 0; text-align: center; font-size: 14px; color: var(--muted); }
+.auth-switch a { color: #8fb3ff; font-weight: 600; text-decoration: none; }
+.auth-switch a:hover { text-decoration: underline; }
+.back-home { margin-top: 22px; font-size: 13px; color: var(--muted); text-decoration: none; }
+.back-home:hover { color: #fff; }

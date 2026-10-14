@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>THE PENTAGON | A Connected Digital Ecosystem for Smarter Learning</title>
+  <meta name="description" content="THE PENTAGON brings students, teachers, resources and classroom insights together in one connected digital ecosystem." />
+
+  <!-- lets the CSS know JavaScript is running (used by the scroll animations) -->
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- intro animation styles -->
+  <link rel="stylesheet" href="css/pentagon-intro.css" />
+  <!-- website styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- =====================  INTRO ANIMATION (keep first inside body)  ===================== -->
+  <div id="pentagon-intro">
+    <canvas id="pi-canvas"></canvas>
+    <div class="pi-text">
+      <h1 class="pi-title" id="pi-title" aria-label="THE PENTAGON"></h1>
+      <p class="pi-powered" id="pi-powered">powered by <b>NightBerrieZ</b></p>
+    </div>
+    <button class="pi-skip" id="pi-skip">SKIP</button>
+  </div>
+
+  <!-- =====================  3D BRAIN BACKGROUND  ===================== -->
+  <canvas id="brain-canvas" aria-hidden="true"></canvas>
+
+  <!-- =====================  NAV BAR  ===================== -->
+ 
+<header class="nav" id="nav">
+  <a class="nav-logo" href="#home" aria-label="THE PENTAGON - home">
+    <svg viewBox="-60 -64 120 128" width="38" height="40" aria-hidden="true">
+      <defs>
+        <linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#60a5fa"/>
+          <stop offset="1" stop-color="#22d3ee"/>
+        </linearGradient>
+      </defs>
+      <path d="M0 -60 L52 -30 L52 30 L0 60 L-52 30 L-52 -30 Z"
+        fill="none" stroke="url(#logoG)" stroke-width="8"
+        stroke-linejoin="round"/>
+      <path d="M0 -26 L22 -13 L22 13 L0 26 L-22 13 L-22 -13 Z"
+        fill="url(#logoG)"/>
+    </svg>
+    <span class="nav-brand-text">THE PENTAGON</span>
+  </a>
+
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="#about">About Us</a>
+    <a href="#contact">Support</a>
+    <button class="nav-cta" id="open-demo" type="button">
+      Request Demo
+    </button>
+  </nav>
+</header>
+
+
+  <main>
+
+    <!-- =====================  HERO  ===================== -->
+ 
+<section class="hero" id="home">
+  <div class="hero-inner">
+
+    <!-- LEFT: Brand and message -->
+    <div class="hero-copy">
+      <span class="hero-eyebrow">
+        A NEW DIMENSION IN EDUCATION
+      </span>
+
+      <h1 class="brand">THE PENTAGON</h1>
+
+      <p class="powered">
+        An intelligent learning ecosystem
+        <span class="powered-divider">|</span>
+        by <b>NightBerrieZ</b>
+      </p>
+
+      <p class="hero-description">
+        Bringing students, educators and institutions together
+        through connected learning, meaningful insights and
+        smarter digital experiences.
+      </p>
+
+      <div class="quote-wrap">
+        <span class="quote-label">WHY EDUCATION MATTERS</span>
+        <blockquote class="quote" id="quote">
+          Education turns curiosity into capability, and
+          capability into a brighter tomorrow.
+        </blockquote>
+      </div>
+
+      <a href="#about" class="hero-explore">
+        Explore the platform <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <!-- RIGHT: Existing brain visual -->
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-visual-glow"></div>
+      <div class="brain-caption">
+        <span class="brain-caption-dot"></span>
+        CONNECTING KNOWLEDGE
+      </div>
+    </div>
+
+  </div>
+
+  <a class="scroll-cue" href="#about" aria-label="Scroll down">
+    <span></span>
+  </a>
+</section>
+
+
+    <!-- =====================  ABOUT (light rectangle with image bound into it)  ===================== -->
+    <section class="section about" id="about">
+      <div class="about-card reveal">
+        <div class="about-copy">
+          <span class="eyebrow">About the platform</span>
+          <h2 class="about-title">THE PENTAGON</h2>
+          <p class="about-text">
+            Where every student, teacher, resource, and classroom insight comes together—creating a connected digital ecosystem built for smarter learning and better education.
+          </p>
+          <ul class="chips" aria-label="What connects on the platform">
+            <li>Students</li><li>Teachers</li><li>Resources</li><li>Insights</li>
+          </ul>
+        </div>
+        <div class="about-art">
+          <img src="assets/ecosystem.svg" alt="Illustration of students, teachers, resources and schools connected around THE PENTAGON" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================  PORTAL LOGINS  ===================== -->
+    <section class="section access" id="access">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="eyebrow eyebrow-dark">Secure access</span>
+          <h2 class="section-title">Choose your portal</h2>
+          <p class="section-sub">Sign in with the role that fits you. Each portal is tailored to what you need.</p>
+        </header>
+
+        <div class="portal-grid">
+          <article class="portal reveal" style="--c1:#2563eb;--c2:#1d4ed8">
+            <div class="portal-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg>
+            </div>
+            <h3>Students Login</h3>
+            <p>Classes, resources, assignments and your learning progress in one place.</p>
+            <a class="btn-login" href="login.html?role=student">Login <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="portal reveal" style="--c1:#2563eb;--c2:#1d4ed8">
+            <div class="portal-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8M7 12l3-3 3 2 4-4"/></svg>
+            </div>
+            <h3>Faculty Login</h3>
+            <p>Plan lessons, share material and understand your classroom at a glance.</p>
+            <a class="btn-login" href="login.html?role=faculty">Login <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="portal reveal" style="--c1:#2563eb;--c2:#1d4ed8">
+            <div class="portal-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M9 11h.01M15 11h.01"/></svg>
+            </div>
+            <h3>School Administration Login</h3>
+            <p>Oversee departments, people and institution-wide performance.</p>
+            <a class="btn-login" href="login.html?role=school">Login <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="portal reveal" style="--c1:#2563eb;--c2:#1d4ed8">
+            <div class="portal-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <h3>Admin Login</h3>
+            <p>Platform control, access management and system-level configuration.</p>
+            <a class="btn-login" href="login.html?role=admin">Login <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================  BENEFITS  ===================== -->
+    <section class="section benefits" id="benefits">
+      <div class="container benefits-grid">
+        <div class="benefits-copy">
+          <header class="reveal">
+            <span class="eyebrow eyebrow-dark">Benefits</span>
+            <h2 class="section-title">Why institutions choose THE PENTAGON</h2>
+          </header>
+
+          <ol class="benefit-list">
+            <li class="reveal">
+              <span class="badge">1</span>
+              <div><h3>One connected campus</h3><p>Students, teachers, resources and records live in a single digital ecosystem.</p></div>
+            </li>
+            <li class="reveal">
+              <span class="badge">2</span>
+              <div><h3>Classroom insights in real time</h3><p>Clear, actionable views of engagement, attendance and progress.</p></div>
+            </li>
+            <li class="reveal">
+              <span class="badge">3</span>
+              <div><h3>Less paperwork, more teaching</h3><p>Everyday administrative tasks become simple, fast and organised.</p></div>
+            </li>
+            <li class="reveal">
+              <span class="badge">4</span>
+              <div><h3>Secure, role-based access</h3><p>Every person sees exactly what they need, and nothing more.</p></div>
+            </li>
+            <li class="reveal">
+              <span class="badge">5</span>
+              <div><h3>Learning that goes beyond the classroom</h3><p>Resources and support are available whenever learners need them.</p></div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="benefits-art reveal">
+          <img src="assets/benefits.svg" alt="Dashboard showing engagement, attendance and progress" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================  FOOTER  ===================== -->
+  <footer class="footer" id="contact">
+    <div class="footer-inner">
+      <nav class="footer-left" aria-label="Legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+      </nav>
+      <div class="footer-right">
+        <!-- TIP: put your real contact email or contact page here -->
+        <a href="mailto:contact@yourdomain.com">Contact NightBerrieZ</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================  REQUEST DEMO POP-UP  ===================== -->
+  <dialog id="demo-modal" class="modal" aria-labelledby="demo-title">
+    <button type="button" class="modal-x" id="demo-close" aria-label="Close">×</button>
+
+    <div id="demo-form-wrap">
+      <span class="eyebrow eyebrow-dark">Demo portal access</span>
+      <h2 id="demo-title">Request a demo</h2>
+      <p class="modal-sub">Tell us a little about your institution and we will set up demo portal access for you.</p>
+
+      <form id="demo-form">
+        <label>Full name
+          <input type="text" name="name" required autocomplete="name" placeholder="Your name" />
+        </label>
+        <label>Work email
+          <input type="email" name="email" required autocomplete="email" placeholder="you@school.edu" />
+        </label>
+        <label>Institution
+          <input type="text" name="institution" required placeholder="School or college name" />
+        </label>
+        <label>I am a
+          <select name="role" required>
+            <option value="" disabled selected>Select your role</option>
+            <option>Principal / Administrator</option>
+            <option>Faculty</option>
+            <option>IT / Operations</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <button type="submit" class="btn-login btn-block">Request demo access <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+
+    <div id="demo-success" class="demo-success" hidden>
+      <div class="success-hex" aria-hidden="true">✓</div>
+      <h2>Thank you!</h2>
+      <p>Your request has been received. Our team will share your demo portal access shortly.</p>
+      <button type="button" class="btn-login" id="demo-done">Close</button>
+    </div>
+  </dialog>
+
+  <!-- =====================  SCRIPTS (keep at the bottom, in this order)  ===================== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/pentagon-intro.js"></script>
+</body>
+</html>

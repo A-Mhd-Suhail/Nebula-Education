@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My calendar | THE PENTAGON</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="../css/student.css" />
+  <link rel="stylesheet" href="../css/student-calendar.css" />
+</head>
+<body class="rs">
+  <header class="topbar">
+    <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="" /><span>THE PENTAGON</span></a>
+    <nav aria-label="Main">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="class.html" class="on">My class</a>
+      <a href="#" data-soon>Student network</a>
+      <a href="#" data-soon>Study connect</a>
+    </nav>
+    <div class="nav-av" id="nav-av" aria-hidden="true"></div>
+    <a href="#" class="logout" id="logout">Log out</a>
+  </header>
+
+  <main class="page">
+    <div id="conn" class="conn" hidden></div>
+    <div>
+      <p class="crumb"><a href="class.html">My class</a> &rsaquo; My calendar</p>
+      <div class="ttl">
+        <h1>My calendar</h1>
+        <div class="yr">
+          <span class="sync" id="sync"><i class="sd"></i>Connecting...</span>
+          <span class="muted sm">Academic year</span>
+          <div class="pill"><button id="yprev" type="button" aria-label="Previous year">&lsaquo;</button><span id="ylabel"></span><button id="ynext" type="button" aria-label="Next year">&rsaquo;</button></div>
+          <button class="btn ghost sm noprint" id="ics" type="button"><i class="ti ti-download"></i>Export</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="months" id="months" role="tablist" aria-label="Months"></div>
+    <div class="tools2">
+      <div id="filters"></div>
+      <input class="srch noprint" id="q" type="search" placeholder="Search notes and topics" autocomplete="off" />
+      <div class="sres" id="sres" hidden></div>
+    </div>
+
+    <div class="cwrap">
+      <section class="card">
+        <div class="mhead"><h2 id="mtitle"></h2>
+          <div class="noprint" style="display:flex;gap:6px"><button class="btn ghost sm" id="mprev" type="button" aria-label="Previous month">&lsaquo;</button><button class="btn ghost sm" id="mtoday" type="button">Today</button><button class="btn ghost sm" id="mnext" type="button" aria-label="Next month">&rsaquo;</button></div></div>
+        <div class="wkh"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
+        <div class="cgrid" id="grid"></div>
+        <div class="lg"><span><i class="k1"></i>My handwritten notes</span><span><i class="k2"></i>Teacher board notes</span><span><i class="k3"></i>AI notes</span><span><i style="background:var(--gr);border:1px solid var(--mt)"></i>Holiday</span><span><i style="background:var(--pk)"></i>Exam day</span><span><i style="background:var(--lp)"></i>Weekly off</span></div>
+      </section>
+
+      <div class="col2" style="display:flex;flex-direction:column;gap:14px">
+        <section class="card" style="background:var(--lp);border-color:var(--pk)"><h2 style="font-size:15px;margin:0 0 8px">Year progress</h2><div id="progress"></div></section>
+        <section class="card"><h2 style="font-size:15px;margin:0 0 6px">Coming up</h2><div id="upcoming"></div></section>
+        <section class="card noprint"><h2 style="font-size:15px;margin:0 0 6px">Quick actions</h2>
+          <button class="qa" id="addev" type="button"><i class="ti ti-plus"></i>Add personal event</button>
+          <a class="qa" id="rev" href="calendar.html#revision"><i class="ti ti-bell"></i>Set revision reminders</a>
+          <button class="qa" id="pdf" type="button"><i class="ti ti-file-download"></i>Download month as PDF</button>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <dialog id="dlg-ev">
+    <form id="f-ev">
+      <h2>Add personal event</h2><p class="sub">Only you can see this. It is saved on this device.</p>
+      <label>Title<input name="title" required maxlength="80" /></label>
+      <label>Date<input name="date" type="date" required /></label>
+      <label>Time (optional)<input name="time" type="time" /></label>
+      <div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn" type="submit">Save event</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status"></div>
+  <script src="../js/hx-config.js"></script>
+  <script src="../js/hx-api.js"></script>
+  <script src="../js/student-calendar.js"></script>
+</body>
+</html>

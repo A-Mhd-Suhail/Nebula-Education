@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Dashboard | THE PENTAGON</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/student.css" />
+</head>
+<body data-page="dashboard">
+  <canvas id="net-canvas" data-rgb="150,125,90" data-alpha="0.22" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="" /><span>THE PENTAGON</span></a>
+    <nav aria-label="Main">
+      <a href="dashboard.html" class="on">Dashboard</a>
+      <a href="class.html">My class</a>
+      <a href="#" data-soon>Student network</a>
+      <a href="#" data-soon>Study connect</a>
+    </nav>
+    <div class="nav-av" id="nav-av" aria-hidden="true"></div>
+    <a href="#" class="logout" id="logout">Log out</a>
+  </header>
+
+  <main class="page">
+
+    <!-- PROFILE -->
+    <section class="card profile" id="profile">
+      <div class="banner" id="banner"><button class="btn ghost sm" id="btn-banner" type="button">Edit banner</button></div>
+      <div class="p-body">
+        <div class="av-wrap">
+          <div class="avatar" id="avatar"></div>
+          <button class="av-btn" id="btn-avatar" type="button" aria-label="Change profile picture">+</button>
+        </div>
+        <div class="p-info">
+          <h1><span id="p-name"></span></h1>
+          <div class="meta"><span id="p-grade"></span> &nbsp;·&nbsp; <span id="p-school"></span></div>
+          <p class="bio" id="p-bio"></p>
+        </div>
+        <div class="p-actions">
+          <a class="btn ghost sm" href="#posts">Portfolio</a>
+          <button class="btn sm" id="edit-profile" type="button">Edit profile</button>
+        </div>
+      </div>
+      <div class="stats">
+        <a class="stat" href="#performance" style="text-decoration:none"><small>Average marks</small><strong id="s-avg">--</strong><em id="s-cgpa">Add your marks</em></a>
+        <div class="stat"><small>AIR score</small><strong id="s-air">--</strong><em>Preview score</em></div>
+        <div class="stat"><small>Profile views</small><strong id="s-views">0</strong><em>Needs backend</em></div>
+        <div class="stat"><small>Impressions</small><strong id="s-impr">0</strong><em>Needs backend</em></div>
+      </div>
+      <input type="file" id="in-banner" accept="image/*" hidden />
+      <input type="file" id="in-avatar" accept="image/*" hidden />
+    </section>
+
+    <!-- ABOUT ME -->
+    <section class="card" id="about">
+      <div class="head"><div><h2>About me</h2><p>Optional. Help teachers and classmates get to know you.</p></div>
+        <button class="btn ghost sm" id="edit-about" type="button">Edit</button></div>
+      <div class="grid3" id="about-grid"></div>
+      <span class="lab" style="margin-top:18px">Suggested for you, matched on your skills and interests</span>
+      <div class="grid3" id="match-grid"></div>
+      <p class="muted sm" style="margin-top:8px">Sample people are shown until the student network is connected.</p>
+    </section>
+
+    <!-- ACADEMIC PERFORMANCE -->
+    <section class="card" id="performance">
+      <div class="head"><div><h2>Academic performance</h2><p>Add subject marks. The average is shown on your profile.</p></div></div>
+      <div class="avg"><strong id="avg-big">--</strong><span>average marks<br>across <b id="avg-n">0</b> subjects</span></div>
+      <form class="inline" id="mark-form">
+        <input name="subject" placeholder="Subject" required maxlength="40" />
+        <input name="marks" type="number" min="0" max="100" step="0.1" placeholder="Marks (%)" required />
+        <button class="btn sm" type="submit">Add subject</button>
+      </form>
+      <div id="marks"></div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="card" id="skills">
+      <div class="head"><div><h2>Skills</h2><p>Academic and extra-curricular activities, with your level.</p></div></div>
+      <form class="inline" id="skill-form">
+        <input name="name" placeholder="Skill (e.g. Algebra, Football)" required maxlength="40" />
+        <select name="kind"><option value="Academic">Academic</option><option value="Extra-curricular">Extra-curricular (ECA)</option></select>
+        <select name="level"><option>Beginner</option><option selected>Intermediate</option><option>Advanced</option></select>
+        <button class="btn sm" type="submit">Add skill</button>
+      </form>
+      <div class="grid2">
+        <div class="tile"><h3>Academic</h3><div class="chips" id="sk-a"></div></div>
+        <div class="tile"><h3>Extra-curricular (ECA)</h3><div class="chips" id="sk-e"></div></div>
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="card" id="achievements">
+      <div class="head"><div><h2>Achievements</h2><p>Projects and activities you won. Posts marked as won appear here too.</p></div></div>
+      <form class="inline" id="ach-form">
+        <input name="title" placeholder="Achievement name" required maxlength="80" />
+        <input name="date" type="date" required />
+        <input name="desc" placeholder="Short description" maxlength="160" style="flex-basis:220px" />
+        <button class="btn sm" type="submit">Add</button>
+      </form>
+      <div id="ach-list"></div>
+    </section>
+
+    <!-- LEARNING PROGRESS -->
+    <section class="card" id="learning">
+      <div class="head"><div><h2>Learning progress</h2><p>Log what you are learning each day to build your streak.</p></div><span class="streak-badge" id="streak-badge">0-day streak</span></div>
+      <div class="grid2">
+        <div class="tile">
+          <h3>Log today's learning</h3>
+          <form class="inline" id="log-form" style="margin-bottom:0">
+            <input name="topic" placeholder="e.g. Python loops" required maxlength="80" />
+            <button class="btn sm" type="submit">Log</button>
+          </form>
+          <div class="week" id="week"></div>
+        </div>
+        <div class="tile"><h3>Currently learning</h3><div id="courses"></div></div>
+      </div>
+      <div class="grid3" style="margin-top:16px">
+        <div><h3 class="sub">Completed courses</h3><div id="done"></div></div>
+        <div><h3 class="sub">Upcoming learning goals</h3>
+          <form class="inline" id="goal-form"><input name="text" placeholder="e.g. Finish Python basics" required maxlength="90" /><input name="date" type="date" /><button class="btn sm" type="submit">Add</button></form>
+          <div id="goals"></div></div>
+        <div><h3 class="sub">Progress timeline</h3><ol class="timeline" id="timeline"></ol></div>
+      </div>
+    </section>
+
+    <!-- POSTS -->
+    <section class="card" id="posts">
+      <div class="head"><div><h2>Posts</h2><p>Everything you share. Posts are created on the post page.</p></div><a class="btn sm" href="post.html">+ New post</a></div>
+      <div class="cols">
+        <div><p class="colh">All posts · <span id="n-all">0</span></p><div class="col" id="col-all"></div></div>
+        <div><p class="colh">Projects · <span id="n-proj">0</span></p><div class="col" id="col-proj"></div></div>
+        <div><p class="colh">Achievements · <span id="n-won">0</span></p><div class="col" id="col-won"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PROFILE DIALOG -->
+  <dialog id="dlg-profile">
+    <form id="f-profile">
+      <h2>Your profile</h2>
+      <p class="sub">Fields marked * are required to enter your dashboard.</p>
+      <label class="req">Profile picture<input type="file" name="avatar" accept="image/*" /></label>
+      <label>Banner image (optional, a default is used)<input type="file" name="banner" accept="image/*" /></label>
+      <label class="req">Full name<input name="name" required maxlength="60" autocomplete="name" /></label>
+      <label class="req">Academic year (grade)<select name="grade" required><option value="" disabled selected>Select grade</option></select></label>
+      <label class="req">School name<input name="school" required maxlength="80" /></label>
+      <label class="req">Bio<textarea name="bio" required maxlength="300" placeholder="Tell us about yourself in a few lines"></textarea></label>
+      <p class="sm" id="pf-err" style="color:var(--bad);min-height:18px"></p>
+      <div class="acts"><button type="button" class="btn ghost" id="pf-cancel">Cancel</button><button class="btn" type="submit">Save profile</button></div>
+    </form>
+  </dialog>
+
+  <!-- ABOUT DIALOG -->
+  <dialog id="dlg-about">
+    <form id="f-about">
+      <h2>About me</h2><p class="sub">Everything here is optional. Separate lists with commas.</p>
+      <label>Interests<input name="interests" placeholder="Robotics, chess, music" maxlength="160" /></label>
+      <label>Career goals<textarea name="career" maxlength="240"></textarea></label>
+      <label>Learning goals<textarea name="learnGoals" maxlength="240"></textarea></label>
+      <label>Languages known<input name="languages" placeholder="English, Tamil, Hindi" maxlength="120" /></label>
+      <label>Personal strengths<input name="strengths" placeholder="Leadership, curiosity, teamwork" maxlength="160" /></label>
+      <label>Preferred co-learner (students or teachers you want to learn with)<textarea name="coLearner" maxlength="240"></textarea></label>
+      <div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn" type="submit">Save</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status"></div>
+  <script src="../js/network-bg.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/firebase-client.js"></script>
+  <script src="../js/student.js"></script>
+</body>
+</html>

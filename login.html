@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Log in | THE PENTAGON</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body data-page="login">
+  <canvas id="net-canvas" aria-hidden="true"></canvas>
+
+  <a class="auth-brand" href="index.html" aria-label="THE PENTAGON - home">
+    <img src="assets/logo.png" alt="" />
+    <span>THE PENTAGON</span>
+  </a>
+
+  <main class="auth-card">
+    <h1>Log in</h1>
+    <p class="auth-sub">Welcome back. Choose your role and sign in to your <b id="auth-role">Student</b> portal.</p>
+
+    <div class="role-tabs" role="tablist" aria-label="Choose your role">
+      <button type="button" class="role-tab" data-role="student">Student</button>
+      <button type="button" class="role-tab" data-role="faculty">Faculty</button>
+      <button type="button" class="role-tab" data-role="school">School Admin</button>
+      <button type="button" class="role-tab" data-role="admin">Admin</button>
+    </div>
+
+    <form class="auth-form" id="auth-form" novalidate>
+      <label>Email
+        <input type="email" name="email" required autocomplete="email" placeholder="you@school.edu" />
+      </label>
+      <label>Password
+        <span class="pw-wrap">
+          <input type="password" name="password" required autocomplete="current-password" placeholder="Enter your password" />
+          <button type="button" class="pw-toggle" aria-label="Show password">Show</button>
+        </span>
+      </label>
+      <div class="row">
+        <label><input type="checkbox" name="remember" /> Keep me signed in</label>
+        <a href="#">Forgot password?</a>
+      </div>
+      <button type="submit" class="btn-main">Log in</button>
+      <p class="auth-status" id="auth-status" role="status"></p>
+    </form>
+
+    <p class="auth-switch">New here? <a id="switch-link" href="signup.html">Create an account</a></p>
+  </main>
+
+  <a class="back-home" href="index.html">&larr; Back to home</a>
+
+  <script src="js/network-bg.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-client.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

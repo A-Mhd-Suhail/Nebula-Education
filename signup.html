@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign up | THE PENTAGON</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body data-page="signup">
+  <canvas id="net-canvas" aria-hidden="true"></canvas>
+
+  <a class="auth-brand" href="index.html" aria-label="THE PENTAGON - home">
+    <img src="assets/logo.png" alt="" />
+    <span>THE PENTAGON</span>
+  </a>
+
+  <main class="auth-card">
+    <h1>Create your account</h1>
+    <p class="auth-sub">Join THE PENTAGON as a <b id="auth-role">Student</b>.</p>
+
+    <!-- Admin accounts are created by your institution, so there is no Admin tab here -->
+    <div class="role-tabs" role="tablist" aria-label="Choose your role">
+      <button type="button" class="role-tab" data-role="student">Student</button>
+      <button type="button" class="role-tab" data-role="faculty">Faculty</button>
+      <button type="button" class="role-tab" data-role="school">School Admin</button>
+    </div>
+
+    <form class="auth-form" id="auth-form" novalidate>
+      <label>Full name
+        <input type="text" name="name" required autocomplete="name" placeholder="Your name" />
+      </label>
+      <label>Email
+        <input type="email" name="email" required autocomplete="email" placeholder="you@school.edu" />
+      </label>
+      <label>Institution
+        <input type="text" name="institution" required placeholder="School or college name" />
+      </label>
+      <label>Password
+        <span class="pw-wrap">
+          <input type="password" name="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters" />
+          <button type="button" class="pw-toggle" aria-label="Show password">Show</button>
+        </span>
+      </label>
+      <label>Confirm password
+        <input type="password" name="confirm" required autocomplete="new-password" placeholder="Repeat your password" />
+      </label>
+      <label class="terms">
+        <input type="checkbox" name="terms" required />
+        <span>I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</span>
+      </label>
+      <button type="submit" class="btn-main">Sign up</button>
+      <p class="auth-status" id="auth-status" role="status"></p>
+    </form>
+
+    <p class="auth-switch">Already have an account? <a id="switch-link" href="login.html">Log in</a></p>
+  </main>
+
+  <a class="back-home" href="index.html">&larr; Back to home</a>
+
+  <script src="js/network-bg.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-client.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My class | THE PENTAGON</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="../css/student.css" />
+  <link rel="stylesheet" href="../css/student-class.css" />
+</head>
+<body>
+  <canvas id="net-canvas" data-rgb="150,125,90" data-alpha="0.22" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="" /><span>THE PENTAGON</span></a>
+    <nav aria-label="Main">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="class.html" class="on">My class</a>
+      <a href="#" data-soon>Student network</a>
+      <a href="#" data-soon>Study connect</a>
+    </nav>
+    <div class="nav-av" id="nav-av" aria-hidden="true"></div>
+    <a href="#" class="logout" id="logout">Log out</a>
+  </header>
+
+  <main class="page cls">
+
+    <!-- PROFILE SUMMARY (filled automatically from the dashboard profile) -->
+    <section class="cl-hero">
+      <div class="cl-who">
+        <div class="cl-av" id="c-av"></div>
+        <div><h1 id="c-name">Your name</h1><p id="c-sub"></p></div>
+      </div>
+      <div class="cl-avg">
+        <p class="cl-cap">Average marks</p>
+        <div class="cl-ring" id="r-avg"></div>
+        <p class="cl-note" id="avg-note">in all subjects</p>
+      </div>
+      <div class="cl-lb">
+        <h2><i class="ti ti-trophy"></i>Class leaderboard</h2>
+        <div id="lb"></div>
+      </div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section class="card" id="analytics">
+      <div class="head"><h2><i class="ti ti-chart-bar"></i>Classroom performance analytics</h2></div>
+      <div class="cl-an">
+        <div class="cl-pn">
+          <h3>Overall performance</h3>
+          <div class="cl-ov"><div class="cl-ring sm" id="r-ov"></div><p id="ov-note"></p></div>
+        </div>
+        <div class="cl-pn">
+          <h3>Subject-wise average</h3>
+          <div class="cl-leg"><span><i class="k1"></i>Class average</span><span><i class="k2"></i>You</span></div>
+          <div class="cl-bars" id="bars"></div>
+        </div>
+        <div class="cl-pn">
+          <h3>Attendance</h3>
+          <div class="cl-ov"><div class="cl-ring sm" id="r-att"></div><ul class="cl-att" id="att"></ul></div>
+        </div>
+      </div>
+      <p class="cl-src">Class averages and attendance are published by your teachers.</p>
+    </section>
+
+    <!-- BANNERS -->
+    <div class="cl-ban">
+      <a href="#upcoming" class="cl-b1" id="go-live"><span class="cl-bi"><i class="ti ti-player-play-filled"></i></span><span class="cl-bt"><b>Live classes</b><small>Join your scheduled live sessions</small></span><i class="ti ti-arrow-right"></i></a>
+      <a href="calendar.html" class="cl-b2"><span class="cl-bi"><i class="ti ti-calendar-event"></i></span><span class="cl-bt"><b>My calendar</b><small>See your classes and notes day by day</small></span><i class="ti ti-arrow-right"></i></a>
+    </div>
+
+    <!-- TILES -->
+        <div class="cl-tiles">
+      <a href="#" data-soon class="cl-t t1"><span class="cl-ic"><i class="ti ti-notebook"></i></span><b>School journal</b><small>Daily notes, announcements and updates</small></a>
+      <a href="#" data-soon class="cl-t t2"><span class="cl-ic"><i class="ti ti-book"></i></span><b>Syllabus</b><small>Track your syllabus and progress</small></a>
+      <a href="#" data-soon class="cl-t t3"><span class="cl-ic"><i class="ti ti-books"></i></span><b>Library</b><small>E-books, study material and resources</small></a>
+      <a href="#" data-soon class="cl-t t1"><span class="cl-ic"><i class="ti ti-clipboard-check"></i></span><b>Quiz</b><small>Practice, test and improve</small></a>
+    </div>
+
+    <!-- QUICK ACCESS + UPCOMING -->
+    <div class="cl-two">
+            <section class="card">
+        <div class="head"><h2><i class="ti ti-bolt"></i>Quick access</h2></div>
+        <a href="#" data-soon class="cl-q"><span class="cl-ic"><i class="ti ti-file-text"></i></span><span><b>Class notes</b><small>Your notes, board notes and AI notes</small></span><i class="ti ti-chevron-right"></i></a>
+        <a href="#" data-soon class="cl-q"><span class="cl-ic"><i class="ti ti-clipboard-list"></i></span><span><b>Assignments</b><small>Pending and completed tasks</small></span><i class="ti ti-chevron-right"></i></a>
+        <a href="#" data-soon class="cl-q"><span class="cl-ic"><i class="ti ti-report-analytics"></i></span><span><b>Performance report</b><small>Detailed subject-wise report</small></span><i class="ti ti-chevron-right"></i></a>
+        <a href="#" data-soon class="cl-q"><span class="cl-ic"><i class="ti ti-bell"></i></span><span><b>Class announcements</b><small>Latest updates from your teacher</small></span><i class="ti ti-chevron-right"></i></a>
+      </section>
+
+      <section class="card" id="upcoming">
+        <div class="head"><h2><i class="ti ti-calendar-event"></i>Upcoming classes</h2></div>
+        <div id="cls-list"></div>
+      </section>
+    </div>
+
+    <div class="cl-strip"><i class="ti ti-sparkles"></i>Better learning today, a brighter tomorrow.</div>
+  </main>
+
+  <div id="toast" role="status"></div>
+  <script src="../js/network-bg.js"></script>
+  <script src="../js/student-class.js"></script>
+</body>
+</html>

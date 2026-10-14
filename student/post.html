@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Create a post | THE PENTAGON</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/student.css" />
+</head>
+<body data-page="post">
+  <canvas id="net-canvas" data-rgb="150,125,90" data-alpha="0.22" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a class="brand" href="../index.html"><img src="../assets/logo.png" alt="" /><span>THE PENTAGON</span></a>
+    <nav aria-label="Main">
+      <a href="dashboard.html" class="on">Dashboard</a>
+      <a href="#" data-soon>My class</a>
+      <a href="#" data-soon>Student network</a>
+      <a href="#" data-soon>Study connect</a>
+    </nav>
+    <div class="nav-av" id="nav-av" aria-hidden="true"></div>
+    <a href="#" class="logout" id="logout">Log out</a>
+  </header>
+
+  <main class="page">
+    <div class="pgtop">
+      <div><a class="back" href="dashboard.html#posts">&larr; Back to profile</a><h1>Create a post</h1></div>
+      <div style="display:flex;gap:8px"><button class="btn ghost" id="save-draft" type="button">Save draft</button><button class="btn" type="submit" form="f-post">Publish</button></div>
+    </div>
+
+    <div class="postgrid">
+      <form class="card" id="f-post" novalidate>
+        <h3 class="sub">1. What are you posting?</h3>
+        <div id="types"></div>
+
+        <h3 class="sub" style="margin-top:12px">2. Details</h3>
+        <label class="req">Title<input name="title" required maxlength="90" /></label>
+        <label class="req">Description<textarea name="desc" required maxlength="1200" placeholder="What is it? What did you do or learn?"></textarea></label>
+
+        <div class="grid2">
+          <div><span class="lab" style="margin-top:0">Category</span><div id="cat"></div></div>
+          <div><span class="lab" style="margin-top:0">Result</span><div id="res"></div></div>
+        </div>
+
+        <span class="lab">Cover image</span>
+        <label class="drop" id="drop"><input type="file" name="img" accept="image/*" /><span id="drop-t">Drop an image here or <b>browse</b></span></label>
+        <p class="muted sm" style="margin-top:6px" id="hint">For PDFs, videos and slides, upload them to Google Drive or YouTube and paste the link below.</p>
+
+        <div class="grid2" style="margin-top:12px">
+          <label id="lb-link">Link (optional)<input name="link" type="url" placeholder="https://..." /></label>
+          <label>Date<input name="date" type="date" /></label>
+        </div>
+        <label>Tags<input name="tags" placeholder="robotics, arduino, team project" maxlength="100" /></label>
+        <span class="lab" style="margin-top:0">Who can see this?</span>
+        <div id="vis"></div>
+        <p class="sm" id="err" style="color:var(--bad);min-height:18px;margin-top:6px"></p>
+      </form>
+
+      <aside style="display:flex;flex-direction:column;gap:18px">
+        <div class="card">
+          <h3 class="sub">Live preview</h3>
+          <div class="pv"><div class="cv" id="pv-cv">NO IMAGE</div><div class="bd"><span class="badge" id="pv-badge">Project</span><h4 id="pv-title">Your title</h4><p id="pv-desc">Your description appears here.</p><p id="pv-date" style="font-size:12px"></p></div></div>
+        </div>
+        <div class="card where">
+          <h3 class="sub">Where it will appear</h3>
+          <p id="w-all"></p><p id="w-proj"></p><p id="w-won"></p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="toast" role="status"></div>
+  <script src="../js/network-bg.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/firebase-client.js"></script>
+  <script src="../js/student.js"></script>
+</body>
+</html>
